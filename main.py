@@ -165,20 +165,26 @@ def click():
     for i in multiselects:
         print(tree_products_in_new_order.item(i)['values'][1])
 
+frame_all_products_in_new_order = Frame(new_order_screen, width=465, height=800, bg=color_menu_tracking_orders)
+frame_all_products_in_new_order.place(x=0, y=0)
 
-tree_products_in_new_order = Treeview(new_order_screen, columns=(2, 1), show='headings', height=27)
+tree_products_in_new_order = Treeview(frame_all_products_in_new_order, columns=(2, 1), show='headings', height=27)
 style = Style()
 style.theme_use("clam")
 style.configure('Treeview.Heading', background=color_nenu_screen, font=(None, 14, 'bold'))
 style.configure('Treeview', rowheight=25, font=(None, 12))
-tree_products_in_new_order.column("1", anchor=CENTER, width=500)
+tree_products_in_new_order.column("1", anchor=CENTER, width=350)
 tree_products_in_new_order.heading("1", text="מוצר")
-tree_products_in_new_order.column("2", anchor=CENTER, width=100)
+tree_products_in_new_order.column("2", anchor=CENTER, width=70)
 tree_products_in_new_order.heading("2", text="מחיר")
-tree_products_in_new_order.place(relx=.27, rely=.5, anchor=CENTER)
-vsb = Scrollbar(new_order_screen, orient="vertical", command=tree_products_in_new_order.yview)
-vsb.place(relx=.51, rely=.52, anchor=CENTER, height=679)
+tree_products_in_new_order.place(relx=.485, rely=.54, anchor=CENTER)
+vsb = Scrollbar(frame_all_products_in_new_order, orient="vertical", command=tree_products_in_new_order.yview)
+vsb.place(relx=.96, rely=.56, anchor=CENTER, height=679)
 tree_products_in_new_order.configure(yscrollcommand=vsb.set)
+
+lable_search = Label(frame_all_products_in_new_order, text="כל המוצרים", bg=color_menu_tracking_orders)
+lable_search.place(relx=0.5, rely=0.01)
+
 
 btn1 = Button(new_order_screen, text="כפתור", command=click)
 btn1.place(relx=.55, rely=.5)
