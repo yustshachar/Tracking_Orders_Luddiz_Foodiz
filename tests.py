@@ -2,6 +2,7 @@ import csv
 import json
 from tkinter import *
 from tkinter.ttk import Treeview, Style
+import Function
 ###################read
 # all_products = []
 # with open("AllProducts.csv", "r", encoding='utf8') as r_ap:
@@ -53,12 +54,14 @@ from tkinter.ttk import Treeview, Style
 # d1 = {"product1": {"cost": "12","price": "20"},"product2": {"cost": "40","price": "90"},"product3":{"cost": "6","price": "12"},"product4": {"cost": "20","price": "34"}}
 # name = "product5"
 
-with open("AllProducts.json", encoding="utf8") as r_nf:
-    all_products = json.loads(r_nf.read())
+# with open("AllProducts.json", encoding="utf8") as r_nf:
+#     all_products = json.loads(r_nf.read())
+#
+#
+# print(all_products)
+# print(all_products["product1"])
+# print(type(all_products["product1"]))
+# print(all_products["product1"]["cost"])
+# print(type(all_products["product1"]["cost"]))
 
-
-print(all_products)
-print(all_products["product1"])
-print(type(all_products["product1"]))
-print(all_products["product1"]["cost"])
-print(type(all_products["product1"]["cost"]))
+# print(sorted(Function.read_all_products_from_json()))
