@@ -15,3 +15,6 @@ class MainScreen:
     def start(self):
         self.main_screen.place(x=0, y=0)
 
+    def close(self):
+        self.main_screen.place_forget()
+

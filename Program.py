@@ -1,11 +1,7 @@
-import json
-from datetime import datetime, date
-import configparser
-from tkinter import *
-from tkinter.ttk import Treeview, Style
+from tkinter import Tk
 
 import MainScreen
-from ProductsScreen import *
+import ProductsScreen
 import MainScreen
 import MainMenu
 from Function import *
@@ -23,7 +19,6 @@ class Program:
         window.resizable(False, False)
 
         MainMenu.MainMenu(self.window)
-        MainScreen.MainScreen(window).start()
 
         self.window.mainloop()
 

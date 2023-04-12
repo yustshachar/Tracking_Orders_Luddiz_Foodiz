@@ -1,6 +1,5 @@
-from tkinter import *
-from tkinter.ttk import Treeview
-from Program import *
+from tkinter import Frame, Label, Entry, Button, CENTER, Scrollbar, END
+from tkinter.ttk import Treeview, Style
 import Function
 
 
@@ -20,11 +19,11 @@ class ProductsScreen:
         self.b_reset_search.place(relx=.35, rely=.02)
 
         self.tree_all_products = Treeview(self.products_screen, columns=(3, 2, 1), show='headings', height=23)
-        self.style = Style()
-        self.style.theme_use("clam")
-        self.style.configure('Treeview.Heading', background=Function.colors("color_nenu_screen"),
-                             font=(None, 14, 'bold'))
-        self.style.configure('Treeview', rowheight=25, font=(None, 12))
+        self.style_tap = Style()
+        self.style_tap.theme_use("clam")
+        self.style_tap.configure('Treeview.Heading', background=Function.colors("color_nenu_screen"),
+                                 font=(None, 14, 'bold'))
+        self.style_tap.configure('Treeview', rowheight=25, font=(None, 12))
         self.tree_all_products.column("1", anchor=CENTER, width=700)
         self.tree_all_products.heading("1", text="שם המוצר")
         self.tree_all_products.column("2", anchor=CENTER, width=100)
@@ -53,14 +52,14 @@ class ProductsScreen:
         self.entry_price_product = Entry(self.products_screen, width=17, justify='right', font=(None, 12))
         self.entry_price_product.place(relx=0.153, rely=0.865)
 
-        self.b_save = Button(self.products_screen, text="שמור", width=8, height=1, bg=Function.colors("color_btn_menu"),
+        self.b_save = Button(self.products_screen, text="שמור חדש", width=8, height=1, bg=Function.colors("color_btn_menu"),
                              fg='#ffffff', font=(None, 14, 'bold'), command=self.save_product)
         self.b_save.place(relx=.57, rely=.92)
-        self.b_reset_add = Button(self.products_screen, text="ניקוי", width=8, height=1,
+        self.b_reset_add = Button(self.products_screen, text="ניקוי שדות", width=8, height=1,
                                   bg=Function.colors("color_btn_menu"), fg='#ffffff', font=(None, 14, 'bold'),
                                   command=self.clear_entry_product)
         self.b_reset_add.place(relx=.45, rely=.92)
-        self.b_reset_del = Button(self.products_screen, text="מחק", width=8, height=1,
+        self.b_reset_del = Button(self.products_screen, text="מחק מוצר", width=8, height=1,
                                   bg=Function.colors("color_btn_menu"), fg='#ffffff', font=(None, 14, 'bold'),
                                   command=self.delete_product_from_all_products)
         self.b_reset_del.place(relx=.33, rely=.92)
@@ -74,7 +73,6 @@ class ProductsScreen:
         self.clear_entry_product()
 
     def close(self):
-        self.products_screen.place_forget()
         self.products_screen.place_forget()
 
     def add_products_to_tree_products_screen(self):
