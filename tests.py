@@ -65,3 +65,31 @@ import Function
 # print(type(all_products["product1"]["cost"]))
 
 # print(sorted(Function.read_all_products_from_json()))
+
+
+import tkinter as tk
+from tkinter import Label, ttk
+
+
+def highlight_row(event):
+    tree = event.widget
+    item = tree.identify_row(event.y)
+    if tree.item(item,'text')!='':
+        lbl.config(text=tree.item(item,'text'))
+        lbl.place(x=event.x, y=event.y)
+    else:
+        lbl.place_forget()
+
+root = tk.Tk()
+
+tree = ttk.Treeview(root, style = 'W.TButton')
+
+tree.pack(side="left", fill="both", expand=True)
+
+tree.bind("<Motion>", highlight_row)
+lbl=Label(root,bg="white")
+for i in range(100):
+    tree.insert("", "end", text=f"Item #{i+1}")
+
+
+root.mainloop()

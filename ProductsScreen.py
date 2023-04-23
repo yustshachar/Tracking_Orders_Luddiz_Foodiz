@@ -38,6 +38,10 @@ class ProductsScreen:
         # אירוע בעת לחיצה כפולה
         self.tree_all_products.bind("<Double-1>", self.double_click_on_cell)
 
+        # # אירוע בעת ריחוף
+        # self.lbl=Label(self.products_screen ,bg="#EFDE74")
+        # self.tree_all_products.bind("<Motion>", self.on_hover)
+
         self.lable_name_product = Label(self.products_screen, text=":שם המוצר", bg=Function.colors("color_screen"),
                                         font=(None, 14, 'bold'))
         self.lable_name_product.place(relx=0.78, rely=0.86)
@@ -193,3 +197,12 @@ class ProductsScreen:
         self.add_products_to_tree_products_screen()
 
         event.widget.destroy()
+
+    # def on_hover(self, event):
+    #     tree = event.widget
+    #     item = tree.identify_row(event.y)
+    #     if item != '' and self.tree_all_products.identify_column(event.x) == "#3":
+    #         self.lbl.config(text=tree.item(item)['values'][2])
+    #         self.lbl.place(x=event.x, y=event.y)
+    #     else:
+    #         self.lbl.place_forget()
