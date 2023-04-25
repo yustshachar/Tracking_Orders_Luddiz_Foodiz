@@ -9,6 +9,10 @@ def colors(name):
     return inif["colors"][name]
 
 
+def last_id_order():
+    return inif["last_ID"]["order"]
+
+
 def read_all_products_from_json():
     # מחזיר מילון ממויין לפי השם של המוצר
     with open("AllProducts.json", encoding="utf8") as r_ap:
