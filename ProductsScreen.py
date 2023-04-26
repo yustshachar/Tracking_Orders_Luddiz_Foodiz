@@ -18,12 +18,13 @@ class ProductsScreen:
                                      bg=Function.colors("color_btn_menu"), fg='#ffffff')
         self.b_reset_search.place(relx=.35, rely=.02)
 
-        self.tree_all_products = Treeview(self.products_screen, columns=(3, 2, 1), show='headings', height=23)
-        self.style_tap = Style()
-        self.style_tap.theme_use("clam")
-        self.style_tap.configure('Treeview.Heading', background=Function.colors("color_nenu_screen"),
-                                 font=(None, 14, 'bold'))
-        self.style_tap.configure('Treeview', rowheight=25, font=(None, 12))
+        self.style = Style()
+        self.style.theme_use("clam")
+        self.style.configure("Custom1.Treeview", rowheight=25, font=(None, 12))
+        # self.style.map('Custom1.Treeview')
+        self.style.configure('Custom1.Treeview.Heading', background=Function.colors("color_nenu_screen"), font=(None, 14, 'bold'))
+
+        self.tree_all_products = Treeview(self.products_screen, columns=(3, 2, 1), show='headings', height=23, style="Custom1.Treeview")
         self.tree_all_products.column("1", anchor=CENTER, width=700)
         self.tree_all_products.heading("1", text="שם המוצר")
         self.tree_all_products.column("2", anchor=CENTER, width=100)
