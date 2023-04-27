@@ -8,7 +8,16 @@
         "price": 40,
         "status": 0,
         "method": "",
-        "products": [{"name": "מוצר כלשהו","price": 12,"amount": 1}, {"name": "מוצר אחר","price": 20,"amount": 2}]
+        "products": [{
+                "name": "מוצר כלשהו",
+                "price": 12,
+                "amount": 1
+            }, {
+                "name": "מוצר אחר",
+                "price": 20,
+                "amount": 2
+            }
+        ]
     },
     "4": {
         "date_order": "27-03-2023",
@@ -19,6 +28,35 @@
         "price": 40,
         "status": 0,
         "method": "",
-        "products": [{"name": "product12","price": 16,"amount": 2}, {"name": "מוצרמוצר","price": 40,"amount": 1}]
+        "products": [{
+                "name": "product12",
+                "price": 16,
+                "amount": 2
+            }, {
+                "name": "מוצרמוצר",
+                "price": 40,
+                "amount": 1
+            }
+        ]
+    },
+    "5": {
+        "date_order": "27-04-2023",
+        "name": "שם שלי",
+        "phone": "052-1234567",
+        "date_delivery": "30-04-2023",
+        "remarks": "\n",
+        "price": "490",
+        "status": "לא שולם",
+        "method": "",
+        "products": [{
+                "name": "מוצר אא",
+                "price": 111,
+                "amount": 4
+            }, {
+                "name": "מוצר בב",
+                "price": 23,
+                "amount": 2
+            }
+        ]
     }
 }

@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, CENTER, Scrollbar, Entry, Button, Text, scrolledtext, WORD, END, StringVar
+from tkinter import Frame, Label, CENTER, Scrollbar, Entry, Button, Text, scrolledtext, WORD, END, StringVar, messagebox
 from tkinter.ttk import Treeview, Style, OptionMenu
 from tkcalendar import DateEntry
 from datetime import *
@@ -19,24 +19,27 @@ class NewOrderScreen:
 
         self.lable_title_in = Label(self.new_order_screen, text=":המוצרים בהזמנה", bg=Function.colors("color_screen"), font=(None, 14, 'bold'))
         self.lable_title_in.place(relx=0.2, rely=0.032)
-        self.tree_products_in_new = Treeview(self.new_order_screen, columns=(3, 2, 1), show='headings', height=30, style="Custom3.Treeview")
-        self.tree_products_in_new.column("1", anchor=CENTER, width=290)
-        self.tree_products_in_new.heading("1", text="שם המוצר")
-        self.tree_products_in_new.column("2", anchor=CENTER, width=75)
-        self.tree_products_in_new.heading("2", text="מחיר")
-        self.tree_products_in_new.column("3", anchor=CENTER, width=75)
-        self.tree_products_in_new.heading("3", text="כמות")
-        self.tree_products_in_new.place(relx=.3, rely=.51, anchor=CENTER)
-        self.vsb1 = Scrollbar(self.new_order_screen, orient="vertical", command=self.tree_products_in_new.yview)
+        self.tree_products_in_new_order = Treeview(self.new_order_screen, columns=(3, 2, 1), show='headings', height=30, style="Custom3.Treeview")
+        self.tree_products_in_new_order.column("1", anchor=CENTER, width=290)
+        self.tree_products_in_new_order.heading("1", text="שם המוצר")
+        self.tree_products_in_new_order.column("2", anchor=CENTER, width=75)
+        self.tree_products_in_new_order.heading("2", text="מחיר")
+        self.tree_products_in_new_order.column("3", anchor=CENTER, width=75)
+        self.tree_products_in_new_order.heading("3", text="כמות")
+        self.tree_products_in_new_order.place(relx=.3, rely=.51, anchor=CENTER)
+        self.vsb1 = Scrollbar(self.new_order_screen, orient="vertical", command=self.tree_products_in_new_order.yview)
         self.vsb1.place(relx=.556, rely=.53, anchor=CENTER, height=664)
-        self.tree_products_in_new.configure(yscrollcommand=self.vsb1.set)
+        self.tree_products_in_new_order.configure(yscrollcommand=self.vsb1.set)
+
+        # אירוע בעת לחיצה כפולה
+        self.tree_products_in_new_order.bind("<Double-1>", self.double_click_to_change_count)
 
 
         # שדות
         self.id_order_lable = Label(self.new_order_screen, text="מספר הזמנה", bg=Function.colors("color_screen"), font=(None, 12))
         self.id_order_lable.place(relx=0.85, rely=0.1)
         self.id_order_entry = Entry(self.new_order_screen, width=18, justify="center", font=(None, 12))
-        self.id_order_entry.insert(0, Function.last_id_order())
+        self.id_order_entry.insert(0, int(Function.last_id_order())+1)
         self.id_order_entry.config(state="disabled")
         self.id_order_entry.place(relx=0.63, rely=0.1)
 
@@ -67,29 +70,37 @@ class NewOrderScreen:
         self.remarks_text = Text(self.new_order_screen, width=18, height=6, font=(None, 12), wrap=WORD)
         self.remarks_text.place(relx=0.63, rely=0.4)
 
+        self.bid_lable = Label(self.new_order_screen, text="הצעת מחיר", bg=Function.colors("color_screen"), font=(None, 12))
+        self.bid_lable.place(relx=0.85, rely=0.6)
+        self.def_in_bid = StringVar()
+        self.def_in_bid.set('0')
+        self.bid_entry = Entry(self.new_order_screen, width=18, justify="center", font=(None, 12), textvariable=self.def_in_bid)
+        self.bid_entry.place(relx=0.63, rely=0.6)
+        self.bid_entry.config(state="disabled")
+
         self.price_lable = Label(self.new_order_screen, text="מחיר סופי", bg=Function.colors("color_screen"), font=(None, 12))
-        self.price_lable.place(relx=0.85, rely=0.6)
+        self.price_lable.place(relx=0.85, rely=0.65)
         self.price_entry = Entry(self.new_order_screen, width=18, justify="center", font=(None, 12))
-        self.price_entry.place(relx=0.63, rely=0.6)
+        self.price_entry.place(relx=0.63, rely=0.65)
 
         self.status_lable = Label(self.new_order_screen, text="סטטוס", bg=Function.colors("color_screen"), font=(None, 12))
-        self.status_lable.place(relx=0.85, rely=0.65)
+        self.status_lable.place(relx=0.85, rely=0.7)
         self.options_drop_list = ["לא שולם", "שולם"]
         self.status_selected = StringVar()
         self.status_drop = OptionMenu(self.new_order_screen, self.status_selected, self.options_drop_list[0], *self.options_drop_list)
         self.status_drop.config(width=22)
-        self.status_drop.place(relx=0.63, rely=0.645)
+        self.status_drop.place(relx=0.63, rely=0.695)
 
         self.method_lable = Label(self.new_order_screen, text="אמצעי תשלום", bg=Function.colors("color_screen"), font=(None, 12))
-        self.method_lable.place(relx=0.85, rely=0.7)
+        self.method_lable.place(relx=0.85, rely=0.75)
         self.method_entry = Entry(self.new_order_screen, width=18, justify="right", font=(None, 12))
-        self.method_entry.place(relx=0.63, rely=0.7)
+        self.method_entry.place(relx=0.63, rely=0.75)
 
-        self.b_save_order = Button(self.new_order_screen, text="שמור", bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), width=7)
-        self.b_save_order.place(relx=.64, rely=.8)
+        self.b_save_order = Button(self.new_order_screen, text="שמור", bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), width=7, command=self.save_order)
+        self.b_save_order.place(relx=.64, rely=.85)
 
-        self.b_clear_to_new = Button(self.new_order_screen, text="נקה", bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), width=7)
-        self.b_clear_to_new.place(relx=.83, rely=.8)
+        self.b_clear_to_new = Button(self.new_order_screen, text="נקה", bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), width=7, command=self.clear_all)
+        self.b_clear_to_new.place(relx=.83, rely=.85)
 
         self.b_delete_products = Button(self.new_order_screen, text="מחק פריט", bg=Function.colors("color_menu_tracking_orders"), fg='red', font=(None, 10, "bold"), command=self.delete_selected_product_from_order_in_new)
         self.b_delete_products.place(relx=.054, rely=.952)
@@ -135,10 +146,10 @@ class NewOrderScreen:
         self.all_products_frame.place_forget()
 
     def delete_selected_product_from_order_in_new(self):
-        try: selected_item = self.tree_products_in_new.selection()[0]
+        try: selected_item = self.tree_products_in_new_order.selection()[0]
         except: return
-        self.tree_products_in_new.delete(selected_item)
-
+        self.tree_products_in_new_order.delete(selected_item)
+        self.calculate_bid()
 
     def add_all_products(self):
         for item in self.tree_all_products_in_new.get_children():
@@ -149,16 +160,114 @@ class NewOrderScreen:
     def add_product_to_order(self, event):
         try: selected_item = self.tree_all_products_in_new.selection()[0]
         except: return
-        self.tree_products_in_new.insert("", END, values=[1]+self.tree_all_products_in_new.item(selected_item)['values'])
-        self.tree_all_products_in_new.delete(selected_item)
+        if len(self.tree_products_in_new_order.get_children()) == 0:
+            self.tree_products_in_new_order.insert("", END, values=[1] + self.tree_all_products_in_new.item(selected_item)['values'])
+        else:
+            for item in self.tree_products_in_new_order.get_children():
+                if self.tree_all_products_in_new.item(selected_item)['values'][1] == self.tree_products_in_new_order.item(item)["values"][2]:
+                    count_in_order = int(self.tree_products_in_new_order.item(item)["values"][0]) + 1
+                    self.tree_products_in_new_order.item(item, values=[count_in_order] + self.tree_all_products_in_new.item(selected_item)['values'])
+                    self.calculate_bid()
+                    return
+            self.tree_products_in_new_order.insert("", END, values=[1] + self.tree_all_products_in_new.item(selected_item)['values'])
+        self.calculate_bid()
 
     def clear_all(self):
-        for item in self.tree_products_in_new.get_children():
-            self.tree_products_in_new.delete(item)
+        self.entrys_to_white()
+        for item in self.tree_products_in_new_order.get_children():
+            self.tree_products_in_new_order.delete(item)
         self.name_entry.delete(0, END)
         self.phone_entry.delete(0, END)
         self.remarks_text.delete('1.0', END)
         self.price_entry.delete(0, END)
         self.status_selected.set(self.options_drop_list[0])
         self.method_entry.delete(0, END)
+        self.def_in_bid.set('0')
 
+    def double_click_to_change_count(self, event):
+        """דורש תיקון"""
+        clicked = self.tree_products_in_new_order.identify_region(event.x, event.y)
+        column = self.tree_products_in_new_order.identify_column(event.x)
+        column_indx = int(column[1:]) - 1
+        if clicked != "cell" or column_indx != 0:
+            return
+        try:
+            selectedItem = self.tree_products_in_new_order.selection()[0]
+        except:
+            return
+        selected_all_value = self.tree_products_in_new_order.item(selectedItem)["values"]
+
+        box_cell = self.tree_products_in_new_order.bbox(selectedItem, column)
+
+        entry_edit = Entry(self.tree_products_in_new_order, width=box_cell[2], justify=CENTER)
+        entry_edit.place(x=box_cell[0], y=box_cell[1], width=box_cell[2], height=box_cell[3])
+        entry_edit.editing_column_index = column_indx
+        entry_edit.editing_item_iid = selectedItem
+        entry_edit.insert(0, selected_all_value[column_indx])
+        entry_edit.select_range(0, END)
+        entry_edit.focus()
+        entry_edit.bind("<FocusOut>", self.focus_out_from_edit_entry)
+        entry_edit.bind("<Return>", self.focus_out_from_edit_entry)
+        self.calculate_bid()
+
+    def focus_out_from_edit_entry(self, event):
+        if not event.widget.get().isnumeric():
+            event.widget.destroy()
+            return
+        selectedItem = event.widget.editing_item_iid
+        self.tree_products_in_new_order.item(selectedItem, values=[event.widget.get()] + self.tree_products_in_new_order.item(selectedItem)['values'][1:])
+        event.widget.destroy()
+        self.calculate_bid()
+
+    def calculate_bid(self):
+        bid = 0
+        for item in self.tree_products_in_new_order.get_children():
+            bid += int(self.tree_products_in_new_order.item(item)["values"][1]) * int(self.tree_products_in_new_order.item(item)["values"][0])
+        self.def_in_bid.set(str(bid))
+
+
+    def validate_entrys(self):
+        red = []
+        for ent in [self.name_entry, self.price_entry]:
+            if ent.get() == "": red.append(ent)
+        if not self.price_entry.get().isnumeric(): red.append(self.price_entry)
+        if self.phone_entry.get() != "" and (self.phone_entry.get()[:2] != "05" or len(self.phone_entry.get()) != 10): red.append(self.phone_entry)
+        if len(self.tree_products_in_new_order.get_children()) == 0: self.lable_title_in.config(fg="red")
+
+        if len(red) > 0:
+            for ent in red:
+                ent.config(bg="#FFB6B6")
+            return False
+        elif len(self.tree_products_in_new_order.get_children()) == 0: return False
+        elif self.price_entry.get() < self.bid_entry.get():
+            if not messagebox.askyesno("מחיר סופי נמוך", "המחיר הסופי נמוך מהצעת המחיר\nהאם להמשיך בכל זאת?"): return False
+        return True
+
+    def entrys_to_white(self):
+        for we in [self.name_entry, self.phone_entry, self.price_entry]:
+            we.config(bg="white")
+        self.lable_title_in.config(fg="black")
+
+    def save_order(self):
+        self.entrys_to_white()
+        if not self.validate_entrys():
+            return
+        print("True")
+        return
+        dict_new_order = {}
+        dict_new_order[self.id_order_entry.get()] = {"date_order" : self.date_order_entry.get(),
+                                                     "name" : self.name_entry.get(),
+                                                     "phone" : self.phone_entry.get(),
+                                                     "date_delivery" : self.date_delivery_entry.get(),
+                                                     "remarks" : self.remarks_text.get("1.0",END),
+                                                     "price" : self.price_entry.get(),
+                                                     "status" : self.status_selected.get(),
+                                                     "method" : self.method_entry.get()}
+        products_in_order = []
+        for item in self.tree_products_in_new_order.get_children():
+            products_in_order.append({"name" : self.tree_products_in_new_order.item(item)['values'][2],
+                                      "price" : self.tree_products_in_new_order.item(item)['values'][1],
+                                      "amount" : self.tree_products_in_new_order.item(item)['values'][0]})
+        dict_new_order[self.id_order_entry.get()]["products"] = products_in_order
+        Function.write_order_to_json(dict_new_order)
+        Function.update_id_order()
