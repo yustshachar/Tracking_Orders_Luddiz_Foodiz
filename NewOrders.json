@@ -40,22 +40,50 @@
         ]
     },
     "5": {
-        "date_order": "27-04-2023",
-        "name": "שם שלי",
-        "phone": "052-1234567",
-        "date_delivery": "30-04-2023",
-        "remarks": "\n",
-        "price": "490",
-        "status": "לא שולם",
+        "date_order": "01-05-2023",
+        "name": "שם כלשהו",
+        "phone": "0523224455",
+        "date_delivery": "01-05-2023",
+        "remarks": "הערות כלשהן\n",
+        "price": "222",
+        "status": "פתוח",
         "method": "",
         "products": [{
                 "name": "מוצר אא",
                 "price": 111,
-                "amount": 4
-            }, {
-                "name": "מוצר בב",
-                "price": 23,
                 "amount": 2
+            }
+        ]
+    },
+    "6": {
+        "date_order": "30-04-2023",
+        "name": "עוד ניסיון",
+        "phone": "",
+        "date_delivery": "01-05-2023",
+        "remarks": "בלי מספר כאן\n",
+        "price": "1",
+        "status": "פתוח",
+        "method": "",
+        "products": [{
+                "name": "מוצר ד",
+                "price": 122,
+                "amount": 1
+            }
+        ]
+    },
+    "7": {
+        "date_order": "26-04-2023",
+        "name": "בדיקת מספר הזמנה",
+        "phone": "0523334444",
+        "date_delivery": "27-04-2023",
+        "remarks": "\n",
+        "price": "98",
+        "status": "פתוח",
+        "method": "",
+        "products": [{
+                "name": "מוצר ג",
+                "price": 90,
+                "amount": 1
             }
         ]
     }

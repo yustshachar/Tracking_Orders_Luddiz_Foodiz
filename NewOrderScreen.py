@@ -1,3 +1,4 @@
+import datetime
 from tkinter import Frame, Label, CENTER, Scrollbar, Entry, Button, Text, scrolledtext, WORD, END, StringVar, messagebox
 from tkinter.ttk import Treeview, Style, OptionMenu
 from tkcalendar import DateEntry
@@ -39,14 +40,15 @@ class NewOrderScreen:
         self.id_order_lable = Label(self.new_order_screen, text="מספר הזמנה", bg=Function.colors("color_screen"), font=(None, 12))
         self.id_order_lable.place(relx=0.85, rely=0.1)
         self.id_order_entry = Entry(self.new_order_screen, width=18, justify="center", font=(None, 12))
-        self.id_order_entry.insert(0, int(Function.last_id_order())+1)
-        self.id_order_entry.config(state="disabled")
+        self.edit_id_order_entry()
         self.id_order_entry.place(relx=0.63, rely=0.1)
 
         self.date_order_lable = Label(self.new_order_screen, text="תאריך הזמנה", bg=Function.colors("color_screen"), font=(None, 12))
         self.date_order_lable.place(relx=0.85, rely=0.15)
-        self.date_order_entry = DateEntry(self.new_order_screen, width=16, borderwidth=2, date_pattern='dd-MM-yyyy', justify="center", font=(None, 12), showweeknumbers=False, firstweekday='sunday', mindate=datetime.today(), locale='he_IL', weekenddays=[7,7])
+        self.date_order_entry = DateEntry(self.new_order_screen, width=16, borderwidth=2, date_pattern='dd-MM-yyyy', justify="center", font=(None, 12), showweeknumbers=False, firstweekday='sunday', locale='he_IL', weekenddays=[7,7])
         self.date_order_entry.place(relx=0.63, rely=0.15)
+        self.date_order_entry.bind("<<DateEntrySelected>>", self.update_entrydate_delivery)
+
 
         self.name_lable = Label(self.new_order_screen, text="שם לקוח", bg=Function.colors("color_screen"), font=(None, 12))
         self.name_lable.place(relx=0.85, rely=0.25)
@@ -60,7 +62,7 @@ class NewOrderScreen:
 
         self.date_delivery_lable = Label(self.new_order_screen, text="תאריך אספקה", bg=Function.colors("color_screen"), font=(None, 12))
         self.date_delivery_lable.place(relx=0.85, rely=0.35)
-        self.date_delivery_entry = DateEntry(self.new_order_screen, width=16, borderwidth=2, date_pattern='dd-MM-yyyy', justify="center", font=(None, 12), showweeknumbers=False, year=datetime.today().year, month=datetime.today().month, day=datetime.today().day+1, firstweekday='sunday', mindate=datetime.today(), locale='he_IL', weekenddays=[7,7])
+        self.date_delivery_entry = DateEntry(self.new_order_screen, width=16, borderwidth=2, date_pattern='dd-MM-yyyy', justify="center", font=(None, 12), showweeknumbers=False, year=datetime.today().year, month=datetime.today().month, day=datetime.today().day+1, firstweekday='sunday', mindate=datetime.strptime(self.date_order_entry.get(), "%d-%m-%Y"), locale='he_IL', weekenddays=[7,7])
         self.date_delivery_entry.place(relx=0.63, rely=0.35)
 
         self.remarks_lable = Label(self.new_order_screen, text="הערות", bg=Function.colors("color_screen"), font=(None, 12))
@@ -85,9 +87,9 @@ class NewOrderScreen:
 
         self.status_lable = Label(self.new_order_screen, text="סטטוס", bg=Function.colors("color_screen"), font=(None, 12))
         self.status_lable.place(relx=0.85, rely=0.7)
-        self.options_drop_list = ["לא שולם", "שולם"]
+        self.options_status_drop_list = ["פתוח", "סגור - בוצע תשלום"]
         self.status_selected = StringVar()
-        self.status_drop = OptionMenu(self.new_order_screen, self.status_selected, self.options_drop_list[0], *self.options_drop_list)
+        self.status_drop = OptionMenu(self.new_order_screen, self.status_selected, self.options_status_drop_list[0], *self.options_status_drop_list)
         self.status_drop.config(width=22)
         self.status_drop.place(relx=0.63, rely=0.695)
 
@@ -95,6 +97,12 @@ class NewOrderScreen:
         self.method_lable.place(relx=0.85, rely=0.75)
         self.method_entry = Entry(self.new_order_screen, width=18, justify="right", font=(None, 12))
         self.method_entry.place(relx=0.63, rely=0.75)
+        # self.options_method_drop_list = ["מזומן", "ביט", "פייבוקס", "העברה בנקאית", "אשראי", "אחר"]
+        # self.method_selected = StringVar()
+        # self.method_drop = OptionMenu(self.new_order_screen, self.method_selected, "נא לבחור אמצעי תשלום", *self.options_method_drop_list)
+        # self.method_drop.config(width=22)
+        # self.method_drop.place(relx=0.63, rely=0.745)
+
 
         self.b_save_order = Button(self.new_order_screen, text="שמור", bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), width=7, command=self.save_order)
         self.b_save_order.place(relx=.64, rely=.85)
@@ -145,6 +153,10 @@ class NewOrderScreen:
         self.new_order_screen.place_forget()
         self.all_products_frame.place_forget()
 
+    def update_entrydate_delivery(self, event):
+        self.date_delivery_entry.config(mindate=datetime.strptime(self.date_order_entry.get(), "%d-%m-%Y"))
+        self.date_delivery_entry.set_date(datetime.strptime(self.date_order_entry.get(), "%d-%m-%Y") + timedelta(1))
+
     def delete_selected_product_from_order_in_new(self):
         try: selected_item = self.tree_products_in_new_order.selection()[0]
         except: return
@@ -180,9 +192,12 @@ class NewOrderScreen:
         self.phone_entry.delete(0, END)
         self.remarks_text.delete('1.0', END)
         self.price_entry.delete(0, END)
-        self.status_selected.set(self.options_drop_list[0])
+        self.status_selected.set(self.options_status_drop_list[0])
         self.method_entry.delete(0, END)
         self.def_in_bid.set('0')
+        self.date_order_entry.set_date(date.today())
+        self.date_delivery_entry.config(mindate=datetime.strptime(self.date_order_entry.get(), "%d-%m-%Y"))
+        self.date_delivery_entry.set_date(date.today() + timedelta(days=1))
 
     def double_click_to_change_count(self, event):
         """דורש תיקון"""
@@ -232,6 +247,7 @@ class NewOrderScreen:
             if ent.get() == "": red.append(ent)
         if not self.price_entry.get().isnumeric(): red.append(self.price_entry)
         if self.phone_entry.get() != "" and (self.phone_entry.get()[:2] != "05" or len(self.phone_entry.get()) != 10): red.append(self.phone_entry)
+        if self.options_status_drop_list.index(self.status_selected.get()) and self.method_entry.get() == "": red.append(self.method_entry)
         if len(self.tree_products_in_new_order.get_children()) == 0: self.lable_title_in.config(fg="red")
 
         if len(red) > 0:
@@ -244,16 +260,21 @@ class NewOrderScreen:
         return True
 
     def entrys_to_white(self):
-        for we in [self.name_entry, self.phone_entry, self.price_entry]:
+        for we in [self.name_entry, self.phone_entry, self.price_entry, self.method_entry]:
             we.config(bg="white")
         self.lable_title_in.config(fg="black")
+
+    def edit_id_order_entry(self):
+        self.id_order_entry.config(state="normal")
+        self.id_order_entry.delete(0, END)
+        self.id_order_entry.insert(0, str(int(Function.last_id_order()) + 1))
+        self.id_order_entry.config(state="disabled")
+
 
     def save_order(self):
         self.entrys_to_white()
         if not self.validate_entrys():
             return
-        print("True")
-        return
         dict_new_order = {}
         dict_new_order[self.id_order_entry.get()] = {"date_order" : self.date_order_entry.get(),
                                                      "name" : self.name_entry.get(),
@@ -271,3 +292,5 @@ class NewOrderScreen:
         dict_new_order[self.id_order_entry.get()]["products"] = products_in_order
         Function.write_order_to_json(dict_new_order)
         Function.update_id_order()
+        self.clear_all()
+        self.edit_id_order_entry()
