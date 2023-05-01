@@ -86,5 +86,61 @@
                 "amount": 1
             }
         ]
+    },
+    "8": {
+        "date_order": "01-05-2023",
+        "name": "שחר יוסט",
+        "phone": "0528857556",
+        "date_delivery": "03-05-2023",
+        "remarks": "\n",
+        "price": "185",
+        "status": "פתוח",
+        "method": "",
+        "products": [{
+                "name": "מוצר ג",
+                "cost": 33,
+                "price": 90,
+                "amount": 1
+            }, {
+                "name": "מוצר חדש",
+                "cost": 31,
+                "price": 46,
+                "amount": 2
+            }
+        ]
+    },
+    "9": {
+        "date_order": "17-05-2023",
+        "name": "שחר יוסט",
+        "phone": "",
+        "date_delivery": "18-05-2023",
+        "remarks": "\n",
+        "price": "90",
+        "status": 0,
+        "method": "",
+        "products": [{
+                "name": "מוצר ג",
+                "cost": 33,
+                "price": 90,
+                "amount": 1
+            }
+        ]
+    },
+    "10": {
+        "date_order": "01-05-2023",
+        "name": "שש",
+        "phone": "",
+        "date_delivery": "02-05-2023",
+        "remarks": "\n",
+        "price": "47",
+        "status": 1,
+        "method": "ביט",
+        "products": [{
+                "name": "מוצר חדש",
+                "cost": 31,
+                "price": 46,
+                "amount": 1
+            }
+        ]
     }
 }

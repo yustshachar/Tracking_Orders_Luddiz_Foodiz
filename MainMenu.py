@@ -34,35 +34,35 @@ class MainMenu:
     def open_main_screen(self):
         self.main_screen.start()
         self.new_order_screen.close()
-        # self.tracking_orders_screen.close()
+        self.tracking_orders_screen.close()
         self.products_screen.close()
         # self.reports_screen.close()
 
     def open_new_order_screen(self):
         self.main_screen.close()
         self.new_order_screen.start()
-        # self.tracking_orders_screen.close()
+        self.tracking_orders_screen.close()
         self.products_screen.close()
         # self.reports_screen.close()
 
     def open_tracking_orders_screen(self):
         self.main_screen.close()
         self.new_order_screen.close()
-        # self.tracking_orders_screen.start()
+        self.tracking_orders_screen.start()
         self.products_screen.close()
         # self.reports_screen.close()
 
     def open_products_screen(self):
         self.main_screen.close()
         self.new_order_screen.close()
-        # self.tracking_orders_screen.close()
+        self.tracking_orders_screen.close()
         self.products_screen.start()
         # self.reports_screen.close()
 
     def open_reports_screen(self):
         self.main_screen.close()
         self.new_order_screen.close()
-        # self.tracking_orders_screen.close()
+        self.tracking_orders_screen.close()
         self.products_screen.close()
         # self.reports_screen.start()
 

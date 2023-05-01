@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, Entry, Button, CENTER, Scrollbar, END
+from tkinter import Frame, Label, Entry, Button, CENTER, Scrollbar, END, messagebox
 from tkinter.ttk import Treeview, Style
 import Function
 
@@ -89,17 +89,20 @@ class ProductsScreen:
         self.clear_entry_product()
 
     def save_product(self):
-        list_products = Function.read_all_products_from_json()
+        dict_products = Function.read_all_products_from_json()
         if len(self.entry_name_product.get()) == 0 or len(self.entry_cost_product.get()) == 0 or len(
                 self.entry_price_product.get()) == 0 or not self.entry_cost_product.get().isnumeric() or not self.entry_price_product.get().isnumeric():
             return
+        if self.entry_name_product.get() in dict_products:
+            if not messagebox.askyesno("הערה", "קיים כבר מוצר בשם הזה.\nהאם להחליפו?"):
+                return
         try:
-            list_products[self.entry_name_product.get()]["cost"] = int(self.entry_cost_product.get())
-            list_products[self.entry_name_product.get()]["price"] = int(self.entry_price_product.get())
+            dict_products[self.entry_name_product.get()]["cost"] = int(self.entry_cost_product.get())
+            dict_products[self.entry_name_product.get()]["price"] = int(self.entry_price_product.get())
         except:
-            list_products[self.entry_name_product.get()] = {"cost": int(self.entry_cost_product.get()),
+            dict_products[self.entry_name_product.get()] = {"cost": int(self.entry_cost_product.get()),
                                                             "price": int(self.entry_price_product.get())}
-        Function.write_products_to_json(list_products)
+        Function.write_products_to_json(dict_products)
         self.add_products_to_tree_products_screen()
         self.entry_name_product.delete(0, END)
         self.entry_cost_product.delete(0, END)

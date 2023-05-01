@@ -67,9 +67,6 @@ import Function
 # print(sorted(Function.read_all_products_from_json()))
 
 ###################################
-from datetime import *
+import os
 
-print(datetime.today().year)
-print(datetime.today().month)
-print(datetime.today().day)
-print(datetime.today().day+1)
+print(os.path.isfile("Tracking_Order.ini"))
