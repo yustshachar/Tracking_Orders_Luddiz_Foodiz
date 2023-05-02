@@ -1,12 +1,15 @@
 from tkinter import Frame, Label, Entry, Button, CENTER, Scrollbar, END, messagebox, LabelFrame
 from tkinter.ttk import Treeview, Style
-from Program import *
+import NewOrderScreen
 import Function
+import SearchOrderTop
 
 
 class TrackingOrders:
-    def __init__(self, window):
+    def __init__(self, window, new_order_screen):
         self.tracking_order_screen = Frame(window, width=1300, height=800, bg=Function.colors("color_screen"))
+        self.edit_order_screen = new_order_screen
+        self.search_top = SearchOrderTop.SearchOrderTop(window)
 
         self.style = Style()
         self.style.theme_use("clam")
@@ -36,21 +39,28 @@ class TrackingOrders:
 
         self.tree_order.bind("<<TreeviewSelect>>", self.click_on_order)
 
-        self.tree_products_in_order = Treeview(self.tracking_order_screen, columns=(2, 1), show='headings', height=22, style="Custom1.Treeview", selectmode="none")
+        self.tree_products_in_order = Treeview(self.tracking_order_screen, columns=(2, 1), show='headings', height=20, style="Custom1.Treeview", selectmode="none")
         self.tree_products_in_order.column("1", anchor=CENTER, width=300)
         self.tree_products_in_order.heading("1", text="שם המוצר")
         self.tree_products_in_order.column("2", anchor=CENTER, width=70)
         self.tree_products_in_order.heading("2", text="כמות")
-        self.tree_products_in_order.place(relx=.16, rely=.406, anchor=CENTER)
+        self.tree_products_in_order.place(relx=.16, rely=.375, anchor=CENTER)
         # self.vsb = Scrollbar(self.tracking_order_screen, orient="vertical", command=self.tree_products_in_order.yview)
         # self.vsb.place(relx=.53, rely=.64, anchor=CENTER, height=500)
         # self.tree_products_in_order.configure(yscrollcommand=self.vsb.set)
 
-        self.b_edit_order = Button(self.tracking_order_screen, text="עריכה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"))
-        self.b_edit_order.place(relx=.03, rely=.85)
+        self.b_edit_order = Button(self.tracking_order_screen, text="עריכת\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.click_edit_order)
+        self.b_edit_order.place(relx=.03, rely=.75)
 
-        self.b_delete_order = Button(self.tracking_order_screen, text="מחיקה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"))
-        self.b_delete_order.place(relx=.17, rely=.85)
+        self.b_delete_order = Button(self.tracking_order_screen, text="מחיקת\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"))
+        self.b_delete_order.place(relx=.17, rely=.75)
+
+        self.b_delete_order = Button(self.tracking_order_screen, text="חיפוש\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=lambda : self.search_top.start())
+        self.b_delete_order.place(relx=.03, rely=.875)
+
+        self.b_delete_order = Button(self.tracking_order_screen, text="כל\nההזמנות", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"))
+        self.b_delete_order.place(relx=.17, rely=.875)
+
 
 
 
@@ -80,3 +90,12 @@ class TrackingOrders:
             self.tree_products_in_order.delete(item)
         for product in all_order[str(self.tree_order.item(selected_order)["values"][6])]["products"]:
             self.tree_products_in_order.insert("", END, values=(product["amount"], product["name"]))
+
+    def click_edit_order(self):
+        try: selected_order = self.tree_order.selection()[0]
+        except: return
+        self.close()
+        self.edit_order_screen.edit_order(str(self.tree_order.item(selected_order)["values"][6]), self.tracking_order_screen)
+
+    def show_after_edit_order(self):
+        self.tracking_order_screen.place(x=0, y=0)

@@ -22,29 +22,40 @@ import Function
 
 
 ################################################################################
-
+from tkcalendar import DateEntry
+from datetime import *
+from tkinter import ttk
+# from tkinter import *
 # with open("AllProducts.json", encoding="utf8") as r_nf:
 #     all_products = json.loads(r_nf.read())
 #
 # window = Tk()
 # window.title('Ludiz.Foodiz')
-# width_win = 1500
-# height_win = 800
+# width_win = 500
+# height_win = 500
 # # מיקום במרכז המסך לפי הקורדינטות ונעילת אפשרות לשנות גודל
 # x_cor = (window.winfo_screenwidth() / 2) - (width_win / 2)
 # y_cor = (window.winfo_screenheight() / 2) - (height_win / 2)
 # window.geometry(f"{width_win}x{height_win}+{int(x_cor)}+{int(y_cor) - 20}")
 #
-# tree_all_products = Treeview(window, columns=(2,1), show='headings', height=25)
-# tree_all_products.column("1", anchor=CENTER, width=500)
-# tree_all_products.heading("1", text="שם המוצר")
-# tree_all_products.column("2", anchor=CENTER, width=120)
-# tree_all_products.heading("2", text="מחיר")
-# tree_all_products.place(relx=.7, rely=.52, anchor= CENTER)
+# # date_delivery_entry = DateEntry(window, width=16, borderwidth=2, date_pattern='dd-MM-yyyy',
+# #                                      justify="center", font=(None, 12), showweeknumbers=False,
+# #                                      year=datetime.today().year, month=datetime.today().month,
+# #                                      day=datetime.today().day, firstweekday='sunday',
+# #                                      locale='he_IL',
+# #                                      weekenddays=[7, 7])
+# # date_delivery_entry.place(relx=0.4, rely=0.4)
+# # date_delivery_entry.delete(0, "")
 #
+# style = ttk.Style(window)
+# style.configure('Treeview', rowheight=20)
+# tree_products_in_new_order = Treeview(window, show='headings', height=20, columns=(1),
+#                                            style="Custom3.Treeview")
+# tree_products_in_new_order.column("1", anchor=CENTER, width=300)
+# tree_products_in_new_order.heading("1", text="שם המוצר")
+# tree_products_in_new_order.place(relx=.4, rely=.51, anchor=CENTER)
 #
-# for name in all_products.keys():
-#     tree_all_products.insert("", END, values=[all_products[name]["price"], name])
+# tree_products_in_new_order.insert("", END, values=("aaaaaaa aaaaaaaaaaaa aaaaaaaaaa aaaaaaa bbbbbbbbbb ccccccccccccc"))
 #
 # window.mainloop()
 
@@ -67,6 +78,5 @@ import Function
 # print(sorted(Function.read_all_products_from_json()))
 
 ###################################
-import os
 
-print(os.path.isfile("Tracking_Order.ini"))
+

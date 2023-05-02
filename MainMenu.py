@@ -26,7 +26,7 @@ class MainMenu:
 
         self.main_screen = MainScreen.MainScreen(window)
         self.new_order_screen = NewOrderScreen.NewOrderScreen(window)
-        self.tracking_orders_screen = TrackingOrders.TrackingOrders(window)
+        self.tracking_orders_screen = TrackingOrders.TrackingOrders(window, self.new_order_screen)
         self.products_screen = ProductsScreen.ProductsScreen(window)
         self.reports_screen = ReportsScreen.ReportsScreen(window)
 

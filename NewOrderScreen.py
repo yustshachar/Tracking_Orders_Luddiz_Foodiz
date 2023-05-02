@@ -5,6 +5,7 @@ from tkcalendar import DateEntry
 from datetime import *
 # from Program import *
 import Function
+import TrackingOrders
 
 
 class NewOrderScreen:
@@ -42,7 +43,6 @@ class NewOrderScreen:
         self.id_order_lable = Label(self.new_order_screen, text="מספר הזמנה", bg=Function.colors("color_screen"), font=(None, 12))
         self.id_order_lable.place(relx=0.85, rely=0.1)
         self.id_order_entry = Entry(self.new_order_screen, width=18, justify="center", font=(None, 12))
-        self.edit_id_order_entry()
         self.id_order_entry.place(relx=0.63, rely=0.1)
 
         self.date_order_lable = Label(self.new_order_screen, text="תאריך הזמנה", bg=Function.colors("color_screen"), font=(None, 12))
@@ -116,10 +116,14 @@ class NewOrderScreen:
         self.b_save_order.place(relx=.64, rely=.85)
 
         self.b_clear_to_new = Button(self.new_order_screen, text="נקה", bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), width=7, command=self.clear_all)
-        self.b_clear_to_new.place(relx=.83, rely=.85)
+        self.b_clear_to_new.place(relx=.828, rely=.85)
 
         self.b_delete_products = Button(self.new_order_screen, text="מחק פריט", bg=Function.colors("color_menu_tracking_orders"), fg='red', font=(None, 10, "bold"), command=self.delete_selected_product_from_order_in_new)
         self.b_delete_products.place(relx=.02, rely=.952)
+
+        self.b_back_to_tracking = Button(self.new_order_screen, text="חזרה למעקב ההזמנות", width=20, height=1, bg="gray", fg='white', font=(None, 12))
+
+
 
 
 
@@ -155,6 +159,7 @@ class NewOrderScreen:
         self.new_order_screen.place(x=400, y=0)
         self.all_products_frame.place(x=0, y=0)
         self.clear_all()
+        self.edit_id_order_entry()
         self.add_all_products()
 
     def close(self):
@@ -207,6 +212,8 @@ class NewOrderScreen:
         self.date_order_entry.set_date(date.today())
         self.date_delivery_entry.config(mindate=datetime.strptime(self.date_order_entry.get(), "%d-%m-%Y"))
         self.date_delivery_entry.set_date(date.today() + timedelta(days=1))
+        self.b_back_to_tracking.place_forget()
+        self.edit_id_order_entry()
 
     def double_click_to_change_count(self, event):
         """דורש תיקון"""
@@ -272,12 +279,11 @@ class NewOrderScreen:
             we.config(bg="white")
         self.lable_title_in.config(fg="black")
 
-    def edit_id_order_entry(self):
+    def edit_id_order_entry(self, id=str(int(Function.last_id_order()) + 1)):
         self.id_order_entry.config(state="normal")
         self.id_order_entry.delete(0, END)
-        self.id_order_entry.insert(0, str(int(Function.last_id_order()) + 1))
+        self.id_order_entry.insert(0, id)
         self.id_order_entry.config(state="disabled")
-
 
     def save_order(self):
         self.entrys_to_white()
@@ -300,10 +306,35 @@ class NewOrderScreen:
                                       "amount" : self.tree_products_in_new_order.item(item)['values'][0]})
         dict_new_order[self.id_order_entry.get()]["products"] = products_in_order
         Function.write_order_to_json(dict_new_order)
-        Function.update_id_order()
+        if int(self.id_order_entry.get()) == int(Function.last_id_order()) + 1:
+            Function.update_id_order()
         self.clear_all()
         self.edit_id_order_entry()
 
-    def edit_order(self):
-        pass
+    def edit_order(self, id, tracking_order_screen):
+        self.start()
+        all_orders = Function.read_new_orders_from_json()
+        self.edit_id_order_entry(id)
+        self.name_entry.insert(0, all_orders[id]["name"])
+        self.phone_entry.insert(0, all_orders[id]["phone"])
+        self.remarks_text.insert('1.0', all_orders[id]["remarks"])
+        self.price_entry.insert(0, all_orders[id]["price"])
+        self.status_selected.set(Function.status_order_option[all_orders[id]["status"]])
+        self.method_entry.insert(0, all_orders[id]["method"])
+        self.date_order_entry.set_date(datetime.strptime(all_orders[id]["date_order"], "%d-%m-%Y"))
+        self.date_order_entry.config(state="disabled")
+        self.date_delivery_entry.set_date(datetime.strptime(all_orders[id]["date_delivery"], "%d-%m-%Y"))
+        self.date_delivery_entry.config(mindate=date.today())
+        for product in all_orders[id]["products"]:
+            self.tree_products_in_new_order.insert("", END, values=(product["amount"], product["price"], product["cost"], product["name"]))
+        self.calculate_bid()
+
+        self.b_back_to_tracking.place(relx=.69, rely=.92)
+        self.b_back_to_tracking.config(command=lambda: self.back_to_tracking_orders_screen(tracking_order_screen))
+
+    def back_to_tracking_orders_screen(self, tracking_order_screen):
+        self.close()
+        tracking_order_screen.place(x=0, y=0)
+
+
 
