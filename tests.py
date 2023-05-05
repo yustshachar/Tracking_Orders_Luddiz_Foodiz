@@ -79,44 +79,61 @@ from tkinter import ttk
 
 ###################################
 
-import tkinter as tk
-class MyDialog(object):
-    def __init__(self, parent):
-        self.toplevel = tk.Toplevel(parent)
-        self.var = tk.StringVar()
-        label = tk.Label(self.toplevel, text="Pick something:")
-        om = tk.OptionMenu(self.toplevel, self.var, "one", "two","three")
-        button = tk.Button(self.toplevel, text="OK", command=self.close)
-        label.pack(side="top", fill="x")
-        om.pack(side="top", fill="x")
-        button.pack()
+# import tkinter as tk
+# class MyDialog(object):
+#     def __init__(self, parent):
+#         self.toplevel = tk.Toplevel(parent)
+#         self.var = tk.StringVar()
+#         label = tk.Label(self.toplevel, text="Pick something:")
+#         om = tk.OptionMenu(self.toplevel, self.var, "one", "two","three")
+#         button = tk.Button(self.toplevel, text="OK", command=self.close)
+#         label.pack(side="top", fill="x")
+#         om.pack(side="top", fill="x")
+#         button.pack()
+#
+#     def show(self):
+#         self.toplevel.deiconify()
+#         self.toplevel.grab_set()
+#         self.toplevel.wait_window()
+#         value = self.var.get()
+#         return value
+#
+#     def close(self):
+#         self.toplevel.destroy()
+#
+#
+#
+# class Example(tk.Frame):
+#     def __init__(self, parent):
+#         tk.Frame.__init__(self, parent)
+#
+#         self.button = tk.Button(self, text="Click me!", command=self.on_click)
+#         self.label = tk.Label(self, width=80)
+#         self.label.pack(side="top", fill="x")
+#         self.button.pack(pady=20)
+#
+#     def on_click(self):
+#         result = MyDialog(self).show()
+#         self.label.configure(text="your result: %s" % result)
+#
+# if __name__ == "__main__":
+#     root = tk.Tk()
+#     Example(root).pack(fill="both", expand=True)
+#     root.mainloop()
 
-    def show(self):
-        self.toplevel.deiconify()
-        self.toplevel.grab_set()
-        self.toplevel.wait_window()
-        value = self.var.get()
-        return value
+# from datetime import *
+# date1 = "01-05-2023"
+# date2 = "04-05-2023"
+# dddd = "05-05-2023"
+# if datetime.strptime(date1, "%d-%m-%Y") <= datetime.strptime(dddd, "%d-%m-%Y") <= datetime.strptime(date2, "%d-%m-%Y"):
+#     print("yes")
 
-    def close(self):
-        self.toplevel.destroy()
+def search_dict(data, name=None, age=None, date=None):
+    results = []
+    for key, value in data.items():
+        if (name is None or value.get('name') == name) and (age is None or value.get('age') == age) and (date is None or value.get('date') == date):
+            results.append(key)
+    return results
 
-
-
-class Example(tk.Frame):
-    def __init__(self, parent):
-        tk.Frame.__init__(self, parent)
-
-        self.button = tk.Button(self, text="Click me!", command=self.on_click)
-        self.label = tk.Label(self, width=80)
-        self.label.pack(side="top", fill="x")
-        self.button.pack(pady=20)
-
-    def on_click(self):
-        result = MyDialog(self).show()
-        self.label.configure(text="your result: %s" % result)
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    Example(root).pack(fill="both", expand=True)
-    root.mainloop()
+dict1 = {"3":{"date":"04-05-2023", "name": "dani", "age":"12"}, "4":{"date":"05-05-2023", "name": "moshe", "age":"40"}}
+print(search_dict(dict1, name="moshe", age="40"))

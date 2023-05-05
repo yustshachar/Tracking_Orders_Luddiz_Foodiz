@@ -105,22 +105,32 @@ class SearchOrderTop(object):
         self.top.deiconify()
         self.top.grab_set()
         self.top.wait_window()
-        return dict_search
+        return dict_search["id"], dict_search["date_order"], dict_search["date_order_2"], dict_search["name"], dict_search["date_delivery"], dict_search["date_delivery_2"], dict_search["status"], dict_search["method"]
+        # return dict_search
 
     def close(self):
+        # אם מסמנים וי ולוחצים על X יש בעיה
         self.top.destroy()
         # self.top.withdraw()
         # self.top.grab_release()
 
     def search(self):
         if self.var_id.get() and self.id_order_entry.get(): dict_search["id"] = self.id_order_entry.get()
+        else: dict_search["id"] = None
         if self.var_date_order.get() and self.date_order_entry.get(): dict_search["date_order"] = self.date_order_entry.get()
+        else: dict_search["date_order"] = None
         if self.var_date_order_2.get() and self.date_order_entry_2.get(): dict_search["date_order_2"] = self.date_order_entry_2.get()
+        else: dict_search["date_order_2"] = None
         if self.var_name.get() and self.name_entry.get(): dict_search["name"] = self.name_entry.get()
+        else: dict_search["name"] = None
         if self.var_date_delivery.get() and self.date_delivery_entry.get(): dict_search["date_delivery"] = self.date_delivery_entry.get()
+        else: dict_search["date_delivery"] = None
         if self.var_date_delivery_2.get() and self.date_delivery_entry_2.get(): dict_search["date_delivery_2"] = self.date_delivery_entry_2.get()
+        else: dict_search["date_delivery_2"] = None
         if self.var_status.get() and self.status_selected.get(): dict_search["status"] = Function.status_order_option.index(self.status_selected.get())
+        else: dict_search["status"] = None
         if self.var_method.get() and self.method_entry.get(): dict_search["method"] = self.method_entry.get()
+        else: dict_search["method"] = None
         self.close()
 
     def open_lock(self, var, entry):

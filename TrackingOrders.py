@@ -3,6 +3,7 @@ from tkinter.ttk import Treeview, Style
 import NewOrderScreen
 import Function
 import SearchOrderTop
+from datetime import datetime
 
 
 class TrackingOrders:
@@ -69,8 +70,6 @@ class TrackingOrders:
     def start(self):
         self.tracking_order_screen.place(x=0, y=0)
         self.add_all_orders_to_tree()
-        for item in self.tree_products_in_order.get_children():
-            self.tree_products_in_order.delete(item)
 
     def close(self):
         self.tracking_order_screen.place_forget()
@@ -79,6 +78,8 @@ class TrackingOrders:
         all_order = Function.read_new_orders_from_json()
         for item in self.tree_order.get_children():
             self.tree_order.delete(item)
+        for item in self.tree_products_in_order.get_children():
+            self.tree_products_in_order.delete(item)
         for id in all_order:
             self.tree_order.insert("", END, values=(Function.status_order_option[all_order[id]["status"]].split()[0], all_order[id]["price"], all_order[id]["date_delivery"], all_order[id]["phone"], all_order[id]["name"], all_order[id]["date_order"], id))
 
@@ -109,7 +110,30 @@ class TrackingOrders:
         self.tracking_order_screen.place(x=0, y=0)
 
     def search_by_parameters(self):
-        dict_search = SearchOrderTop.SearchOrderTop(self.window).start()
-        print(dict_search)
-        if not dict_search:
+        id, date_order, date_order_2, name, date_delivery, date_delivery_2, status, method = SearchOrderTop.SearchOrderTop(self.window).start()
+        if id==date_order==date_order_2==name==date_delivery==date_delivery_2==status==method==None:
             return
+
+        all_orders = Function.read_new_orders_from_json()
+        for item in self.tree_order.get_children():
+            self.tree_order.delete(item)
+        for item in self.tree_products_in_order.get_children():
+            self.tree_products_in_order.delete(item)
+
+        res_ids = []
+        for i in all_orders:
+            if (id is None or id == i) and\
+                (date_order is None or datetime.strptime(date_order, "%d-%m-%Y") <= datetime.strptime(all_orders[i]["date_order"],"%d-%m-%Y")) and\
+                (date_order_2 is None or datetime.strptime(date_order_2, "%d-%m-%Y") >= datetime.strptime(all_orders[i]["date_order"],"%d-%m-%Y")) and\
+                (name is None or all_orders[i]["name"].find(name) != -1) and\
+                (date_delivery is None or datetime.strptime(date_delivery, "%d-%m-%Y") <= datetime.strptime(all_orders[i]["date_delivery"],"%d-%m-%Y")) and\
+                (date_delivery_2 is None or datetime.strptime(date_delivery_2, "%d-%m-%Y") >= datetime.strptime(all_orders[i]["date_delivery"],"%d-%m-%Y")) and\
+                (status is None or all_orders[i]["status"] == status) and \
+                (method is None or all_orders[i]["method"] == method):
+                res_ids.append(i)
+
+        for i in res_ids:
+            self.tree_order.insert("", END, values=(Function.status_order_option[all_orders[i]["status"]].split()[0], all_orders[i]["price"], all_orders[i]["date_delivery"], all_orders[i]["phone"], all_orders[i]["name"], all_orders[i]["date_order"],i))
+
+        # datetime.strptime(date_order, "%d-%m-%Y") <= datetime.strptime(all_orders[i]["date_order"],"%d-%m-%Y") <= datetime.strptime(date_order_2,"%d-%m-%Y") and \
+            # datetime.strptime(date_delivery, "%d-%m-%Y") <= datetime.strptime(all_orders[i]["date_delivery"],"%d-%m-%Y") <= datetime.strptime(date_delivery_2, "%d-%m-%Y") and \
