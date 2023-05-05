@@ -7,9 +7,9 @@ import SearchOrderTop
 
 class TrackingOrders:
     def __init__(self, window, new_order_screen):
+        self.window = window
         self.tracking_order_screen = Frame(window, width=1300, height=800, bg=Function.colors("color_screen"))
         self.edit_order_screen = new_order_screen
-        self.search_top = SearchOrderTop.SearchOrderTop(window)
 
         self.style = Style()
         self.style.theme_use("clam")
@@ -52,14 +52,14 @@ class TrackingOrders:
         self.b_edit_order = Button(self.tracking_order_screen, text="עריכת\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.click_edit_order)
         self.b_edit_order.place(relx=.03, rely=.75)
 
-        self.b_delete_order = Button(self.tracking_order_screen, text="מחיקת\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"))
+        self.b_delete_order = Button(self.tracking_order_screen, text="מחיקת\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.delete_order)
         self.b_delete_order.place(relx=.17, rely=.75)
 
-        self.b_delete_order = Button(self.tracking_order_screen, text="חיפוש\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=lambda : self.search_top.start())
-        self.b_delete_order.place(relx=.03, rely=.875)
+        self.b_search_order = Button(self.tracking_order_screen, text="חיפוש\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.search_by_parameters)
+        self.b_search_order.place(relx=.03, rely=.875)
 
-        self.b_delete_order = Button(self.tracking_order_screen, text="כל\nההזמנות", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"))
-        self.b_delete_order.place(relx=.17, rely=.875)
+        self.b_all_order = Button(self.tracking_order_screen, text="כל\nההזמנות", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.add_all_orders_to_tree)
+        self.b_all_order.place(relx=.17, rely=.875)
 
 
 
@@ -80,7 +80,7 @@ class TrackingOrders:
         for item in self.tree_order.get_children():
             self.tree_order.delete(item)
         for id in all_order:
-            self.tree_order.insert("", END, values=(all_order[id]["status"], all_order[id]["price"], all_order[id]["date_delivery"], all_order[id]["phone"], all_order[id]["name"], all_order[id]["date_order"], id))
+            self.tree_order.insert("", END, values=(Function.status_order_option[all_order[id]["status"]].split()[0], all_order[id]["price"], all_order[id]["date_delivery"], all_order[id]["phone"], all_order[id]["name"], all_order[id]["date_order"], id))
 
     def click_on_order(self, event):
         try: selected_order = self.tree_order.selection()[0]
@@ -91,6 +91,14 @@ class TrackingOrders:
         for product in all_order[str(self.tree_order.item(selected_order)["values"][6])]["products"]:
             self.tree_products_in_order.insert("", END, values=(product["amount"], product["name"]))
 
+    def delete_order(self):
+        try: selected_order = self.tree_order.selection()[0]
+        except: return
+        if not messagebox.askokcancel("מחיקת הזמנה", "האם למחוק לצמיתות את ההזמנה?\nלאחר המחיקה לא יהיה ניתן לשחזר את ההזמנה!"): return
+        all_order = Function.read_new_orders_from_json()
+        Function.delete_order_from_json_by_id(str(self.tree_order.item(selected_order)["values"][6]))
+        self.add_all_orders_to_tree()
+
     def click_edit_order(self):
         try: selected_order = self.tree_order.selection()[0]
         except: return
@@ -99,3 +107,9 @@ class TrackingOrders:
 
     def show_after_edit_order(self):
         self.tracking_order_screen.place(x=0, y=0)
+
+    def search_by_parameters(self):
+        dict_search = SearchOrderTop.SearchOrderTop(self.window).start()
+        print(dict_search)
+        if not dict_search:
+            return

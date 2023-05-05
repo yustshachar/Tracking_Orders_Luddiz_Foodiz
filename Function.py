@@ -58,3 +58,10 @@ def write_order_to_json(dict_order):
     new.update(dict_order)
     with open(all_order_file_name, "wb") as w_no:
         w_no.write(json.dumps(new, ensure_ascii=False).encode("utf-8"))
+
+def delete_order_from_json_by_id(id):
+    all_orders = read_new_orders_from_json()
+    all_orders.pop(id)
+    with open(all_order_file_name, "wb") as w_do:
+        w_do.write(json.dumps(all_orders, ensure_ascii=False).encode("utf-8"))
+

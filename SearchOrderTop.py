@@ -5,7 +5,7 @@ from datetime import *
 import Function
 
 
-class SearchOrderTop:
+class SearchOrderTop(object):
     def __init__(self, window):
         self.top = Toplevel(window)
         self.top.title('Ludiz.Foodiz - Search Order')
@@ -15,6 +15,7 @@ class SearchOrderTop:
         y_cor = (self.top.winfo_screenheight() / 2) - (height_win / 2)
         self.top.geometry(f"{width_win}x{height_win}+{int(x_cor)}+{int(y_cor) - 20}")
         self.top.resizable(False, False)
+        self.top.protocol('WM_DELETE_WINDOW', self.close)
         self.top.configure(bg=Function.colors("color_screen"))
         self.top.withdraw()
 
@@ -88,7 +89,6 @@ class SearchOrderTop:
         self.b_search = Button(self.top, text="חיפוש", bg=Function.colors("color_menu_tracking_orders"), font=(None, 16, "bold"), width=12, height=4, command=self.search)
         self.b_search.place(x=100, y=300, anchor=CENTER)
 
-
         self.option_select_filter = ["כל ההזמנות", "הזמנות להיום ולמחר", "הזמנות פתוחות"]
         self.monthchoosen = ttk.Combobox(self.top, width=35, justify="right", state="readonly")
         self.monthchoosen['values'] = self.option_select_filter
@@ -98,14 +98,30 @@ class SearchOrderTop:
         self.b_search = Button(self.top, text="הצב פילטר", bg=Function.colors("color_menu_tracking_orders"), font=(None, 12), width=8, height=1, command=self.filters_from_saved)
         self.b_search.place(x=400, y=300, anchor=CENTER)
 
-
+        global dict_search
+        dict_search = {}
 
     def start(self):
         self.top.deiconify()
         self.top.grab_set()
+        self.top.wait_window()
+        return dict_search
+
+    def close(self):
+        self.top.destroy()
+        # self.top.withdraw()
+        # self.top.grab_release()
 
     def search(self):
-        self.top.destroy()
+        if self.var_id.get() and self.id_order_entry.get(): dict_search["id"] = self.id_order_entry.get()
+        if self.var_date_order.get() and self.date_order_entry.get(): dict_search["date_order"] = self.date_order_entry.get()
+        if self.var_date_order_2.get() and self.date_order_entry_2.get(): dict_search["date_order_2"] = self.date_order_entry_2.get()
+        if self.var_name.get() and self.name_entry.get(): dict_search["name"] = self.name_entry.get()
+        if self.var_date_delivery.get() and self.date_delivery_entry.get(): dict_search["date_delivery"] = self.date_delivery_entry.get()
+        if self.var_date_delivery_2.get() and self.date_delivery_entry_2.get(): dict_search["date_delivery_2"] = self.date_delivery_entry_2.get()
+        if self.var_status.get() and self.status_selected.get(): dict_search["status"] = Function.status_order_option.index(self.status_selected.get())
+        if self.var_method.get() and self.method_entry.get(): dict_search["method"] = self.method_entry.get()
+        self.close()
 
     def open_lock(self, var, entry):
         if var: entry.config(state="normal")
@@ -118,8 +134,5 @@ class SearchOrderTop:
         try: print(self.option_select_filter.index(self.monthchoosen.get()))
         except: pass
 
-
-if __name__ == '__main__':
-    window = Tk()
-    SearchOrderTop(window)
-    window.mainloop()
+    def aaaa(self):
+        return "abcdeeee"

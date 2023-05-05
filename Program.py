@@ -10,7 +10,7 @@ import SearchOrderTop
 class Program:
     def __init__(self, window):
         self.window = window
-        window.title('Ludiz.Foodiz')
+        window.title('Ludiz.Foodiz - Tracking Orders - V1.2')
         width_win = 1500
         height_win = 800
         x_cor = (window.winfo_screenwidth() / 2) - (width_win / 2)
