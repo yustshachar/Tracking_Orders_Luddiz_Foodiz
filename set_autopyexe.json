@@ -1,0 +1,105 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Program.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": true
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/logo_icon.ico"
+  },
+  {
+   "optionDest": "name",
+   "value": "Luddiz.Foodiz - Tracking Order - V1.3"
+  },
+  {
+   "optionDest": "ascii",
+   "value": false
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "disable_windowed_traceback",
+   "value": false
+  },
+  {
+   "optionDest": "embed_manifest",
+   "value": true
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "win_private_assemblies",
+   "value": false
+  },
+  {
+   "optionDest": "win_no_prefer_redirects",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "argv_emulation",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/AllProducts.json;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/logo.png;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/logo_icon.ico;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/NewOrders.json;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Tracking_Order.ini;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/venv/Lib/site-packages/babel;babel/"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}
