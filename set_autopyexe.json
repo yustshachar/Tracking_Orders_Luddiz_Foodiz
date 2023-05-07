@@ -19,11 +19,11 @@
   },
   {
    "optionDest": "icon_file",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/logo_icon.ico"
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Config/logo_icon.ico"
   },
   {
    "optionDest": "name",
-   "value": "Luddiz.Foodiz - Tracking Order - V1.3"
+   "value": "Luddiz.Foodiz - Tracking Orders - V1.4"
   },
   {
    "optionDest": "ascii",
@@ -75,23 +75,11 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/AllProducts.json;."
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Config;Config/"
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/logo.png;."
-  },
-  {
-   "optionDest": "datas",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/logo_icon.ico;."
-  },
-  {
-   "optionDest": "datas",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/NewOrders.json;."
-  },
-  {
-   "optionDest": "datas",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Tracking_Order.ini;."
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Data;Data/"
   },
   {
    "optionDest": "datas",
