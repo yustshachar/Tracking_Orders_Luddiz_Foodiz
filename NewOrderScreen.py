@@ -288,7 +288,7 @@ class NewOrderScreen:
                 ent.config(bg="#FFB6B6")
             return False
         elif len(self.tree_products_in_new_order.get_children()) == 0: return False
-        elif self.price_entry.get() < self.bid_entry.get():
+        elif int(self.price_entry.get()) < int(self.bid_entry.get()):
             if not messagebox.askyesno("מחיר סופי נמוך", "המחיר הסופי נמוך מהצעת המחיר\nהאם להמשיך בכל זאת?"): return False
         return True
 
@@ -297,7 +297,9 @@ class NewOrderScreen:
             we.config(bg="white")
         self.lable_title_in.config(fg="black")
 
-    def edit_id_order_entry(self, id=str(int(Function.last_id_order()) + 1)):
+    def edit_id_order_entry(self, id=None):
+        if id == None:
+            id = str(int(Function.last_id_order()) + 1)
         self.id_order_entry.config(state="normal")
         self.id_order_entry.delete(0, END)
         self.id_order_entry.insert(0, id)
@@ -327,7 +329,7 @@ class NewOrderScreen:
         if int(self.id_order_entry.get()) == int(Function.last_id_order()) + 1:
             Function.update_id_order()
         self.clear_all()
-        self.edit_id_order_entry()
+        # self.edit_id_order_entry()
 
     def edit_order(self, id, tracking_order_screen):
         self.start()

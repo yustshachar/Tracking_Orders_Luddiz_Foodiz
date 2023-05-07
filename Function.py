@@ -6,9 +6,9 @@ from datetime import datetime
 from tkinter import messagebox
 
 version_number = "1.3"
-ini_file_name = "Tracking_Order.ini"
-all_products_file_name = "AllProducts.json"
-all_order_file_name = "NewOrders.json"
+ini_file_name = r"Config\Tracking_Order.ini"
+all_products_file_name = r"Data\AllProducts.json"
+all_order_file_name = r"Data\NewOrders.json"
 
 status_order_option = ["פתוח", "סגור - בוצע תשלום"]
 
@@ -18,6 +18,21 @@ inif.read(ini_file_name)
 
 def colors(name):
     return inif["colors"][name]
+
+
+# def last_id_order_1():
+#     with open(id_file, 'r') as r_id:
+#         id_order = json.load(r_id)
+#     return id_order["last_ID_order"]
+#
+#
+# def update_id_order_1():
+#     with open(id_file, "r") as r_id:
+#         f = json.load(r_id)
+#     new_id = str(int(f["last_ID_order"]) + 1)
+#     f["last_ID_order"] = new_id
+#     with open(id_file, "w") as w_id:
+#         json.dump(f, w_id)
 
 
 def last_id_order():
@@ -74,7 +89,9 @@ def delete_order_from_json_by_id(id):
 def backup_all():
     if not messagebox.askyesno("BackUp Tracking Order", "האם לגבות את כל נתוני התוכנה?"):
         return
-    zipObj = ZipFile(f'TrackingOrdersV{version_number}-BackUp-{datetime.today().strftime("%d-%m-%Y")}.zip', 'w')
+    if not os.path.exists("BackUp"):
+        os.makedirs("BackUp")
+    zipObj = ZipFile(f'BackUp\TrackingOrdersV{version_number}-BackUp-{datetime.today().strftime("%d-%m-%Y")}.zip', 'w')
     zipObj.write(ini_file_name)
     zipObj.write(all_products_file_name)
     zipObj.write(all_order_file_name)
