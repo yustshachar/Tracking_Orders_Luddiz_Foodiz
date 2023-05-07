@@ -9,6 +9,7 @@ class SearchOrderTop(object):
     def __init__(self, window):
         self.top = Toplevel(window)
         self.top.title('Ludiz.Foodiz - Search Order')
+        # self.top.iconphoto(False, PhotoImage(file = "logo.png"))
         width_win = 800
         height_win = 400
         x_cor = (self.top.winfo_screenwidth() / 2) - (width_win / 2)
@@ -95,42 +96,33 @@ class SearchOrderTop(object):
         self.monthchoosen.place(x=600, y=300, anchor=CENTER)
         self.monthchoosen.set("ניתן לבחור חיפוש מוגדר מראש")
 
-        self.b_search = Button(self.top, text="הצב פילטר", bg=Function.colors("color_menu_tracking_orders"), font=(None, 12), width=8, height=1, command=self.filters_from_saved)
+        self.b_search = Button(self.top, text="הצב פילטר", bg=Function.colors("color_menu_tracking_orders"), font=(None, 12), width=8, height=1)
         self.b_search.place(x=400, y=300, anchor=CENTER)
 
-        global dict_search
-        dict_search = {}
+        self.dict_search = {}
+        self.dict_search["id"] = self.dict_search["date_order"] = self.dict_search["date_order_2"] = self.dict_search["name"] = self.dict_search["date_delivery"] = self.dict_search["date_delivery_2"] = self.dict_search["status"] = self.dict_search["method"] = None
+
 
     def start(self):
         self.top.deiconify()
         self.top.grab_set()
         self.top.wait_window()
-        return dict_search["id"], dict_search["date_order"], dict_search["date_order_2"], dict_search["name"], dict_search["date_delivery"], dict_search["date_delivery_2"], dict_search["status"], dict_search["method"]
-        # return dict_search
+        return self.dict_search["id"], self.dict_search["date_order"], self.dict_search["date_order_2"], self.dict_search["name"], self.dict_search["date_delivery"], self.dict_search["date_delivery_2"], self.dict_search["status"], self.dict_search["method"]
 
     def close(self):
-        # אם מסמנים וי ולוחצים על X יש בעיה
         self.top.destroy()
         # self.top.withdraw()
         # self.top.grab_release()
 
     def search(self):
-        if self.var_id.get() and self.id_order_entry.get(): dict_search["id"] = self.id_order_entry.get()
-        else: dict_search["id"] = None
-        if self.var_date_order.get() and self.date_order_entry.get(): dict_search["date_order"] = self.date_order_entry.get()
-        else: dict_search["date_order"] = None
-        if self.var_date_order_2.get() and self.date_order_entry_2.get(): dict_search["date_order_2"] = self.date_order_entry_2.get()
-        else: dict_search["date_order_2"] = None
-        if self.var_name.get() and self.name_entry.get(): dict_search["name"] = self.name_entry.get()
-        else: dict_search["name"] = None
-        if self.var_date_delivery.get() and self.date_delivery_entry.get(): dict_search["date_delivery"] = self.date_delivery_entry.get()
-        else: dict_search["date_delivery"] = None
-        if self.var_date_delivery_2.get() and self.date_delivery_entry_2.get(): dict_search["date_delivery_2"] = self.date_delivery_entry_2.get()
-        else: dict_search["date_delivery_2"] = None
-        if self.var_status.get() and self.status_selected.get(): dict_search["status"] = Function.status_order_option.index(self.status_selected.get())
-        else: dict_search["status"] = None
-        if self.var_method.get() and self.method_entry.get(): dict_search["method"] = self.method_entry.get()
-        else: dict_search["method"] = None
+        if self.var_id.get() and self.id_order_entry.get(): self.dict_search["id"] = self.id_order_entry.get()
+        if self.var_date_order.get() and self.date_order_entry.get(): self.dict_search["date_order"] = self.date_order_entry.get()
+        if self.var_date_order_2.get() and self.date_order_entry_2.get(): self.dict_search["date_order_2"] = self.date_order_entry_2.get()
+        if self.var_name.get() and self.name_entry.get(): self.dict_search["name"] = self.name_entry.get()
+        if self.var_date_delivery.get() and self.date_delivery_entry.get(): self.dict_search["date_delivery"] = self.date_delivery_entry.get()
+        if self.var_date_delivery_2.get() and self.date_delivery_entry_2.get(): self.dict_search["date_delivery_2"] = self.date_delivery_entry_2.get()
+        if self.var_status.get() and self.status_selected.get(): self.dict_search["status"] = Function.status_order_option.index(self.status_selected.get())
+        if self.var_method.get() and self.method_entry.get(): self.dict_search["method"] = self.method_entry.get()
         self.close()
 
     def open_lock(self, var, entry):
@@ -143,6 +135,3 @@ class SearchOrderTop(object):
     def filters_from_saved(self):
         try: print(self.option_select_filter.index(self.monthchoosen.get()))
         except: pass
-
-    def aaaa(self):
-        return "abcdeeee"

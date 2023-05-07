@@ -136,15 +136,23 @@ class NewOrderScreen:
 
         self.lable_title_all = Label(self.all_products_frame, text=":רשימת כל המוצרים", bg=Function.colors("color_menu_tracking_orders"), font=(None, 14, 'bold'))
         self.lable_title_all.place(relx=0.25, rely=0.032)
-        self.tree_all_products_in_new = Treeview(self.all_products_frame, columns=(2, 1), show='headings', height=32, style="Custom2.Treeview")
+        self.tree_all_products_in_new = Treeview(self.all_products_frame, columns=(2, 1), show='headings', height=31, style="Custom2.Treeview")
         self.tree_all_products_in_new.column("1", anchor=CENTER, width=282)
         self.tree_all_products_in_new.heading("1", text="שם המוצר")
         self.tree_all_products_in_new.column("2", anchor=CENTER, width=70)
         self.tree_all_products_in_new.heading("2", text="מחיר")
-        self.tree_all_products_in_new.place(relx=.48, rely=.52, anchor=CENTER)
+        self.tree_all_products_in_new.place(relx=.48, rely=.505, anchor=CENTER)
         self.vsb = Scrollbar(self.all_products_frame, orient="vertical", command=self.tree_all_products_in_new.yview)
-        self.vsb.place(relx=.947, rely=.539, anchor=CENTER, height=671)
+        self.vsb.place(relx=.947, rely=.525, anchor=CENTER, height=652)
         self.tree_all_products_in_new.configure(yscrollcommand=self.vsb.set)
+
+        self.search_entry = Entry(self.all_products_frame, width=18, justify="center", font=(None, 12))
+        self.search_entry.place(relx=.4, rely=0.953)
+        self.search_btn = Button(self.all_products_frame, text="חיפוש", bg=Function.colors("color_menu_tracking_orders"), font=(None, 10, "bold"), command=self.search_product_from_all)
+        self.search_btn.place(relx=.25, rely=.95)
+        self.search_btn = Button(self.all_products_frame, text="איפוס", bg=Function.colors("color_menu_tracking_orders"), font=(None, 10, "bold"), command=self.add_all_products)
+        self.search_btn.place(relx=.1, rely=.95)
+
 
         # אירוע בעת לחיצה כפולה
         self.tree_all_products_in_new.bind("<Double-1>", self.add_product_to_order)
@@ -177,6 +185,7 @@ class NewOrderScreen:
         self.calculate_bid()
 
     def add_all_products(self):
+        self.search_entry.delete(0, END)
         for item in self.tree_all_products_in_new.get_children():
             self.tree_all_products_in_new.delete(item)
         for name in Function.read_all_products_from_json().keys():
@@ -197,6 +206,15 @@ class NewOrderScreen:
                     return
             self.tree_products_in_new_order.insert("", END, values=[1, dict_all_products[self.tree_all_products_in_new.item(selected_item)["values"][1]]["price"], dict_all_products[self.tree_all_products_in_new.item(selected_item)["values"][1]]["cost"], self.tree_all_products_in_new.item(selected_item)["values"][1]])
         self.calculate_bid()
+
+    def search_product_from_all(self):
+        for item in self.tree_all_products_in_new.get_children():
+            self.tree_all_products_in_new.delete(item)
+        all_products = Function.read_all_products_from_json()
+        for name in all_products.keys():
+            if name.find(self.search_entry.get()) != -1:
+                self.tree_all_products_in_new.insert("", END, values=[all_products[name]["price"], name])
+        self.search_entry.delete(0, END)
 
     def clear_all(self):
         self.entrys_to_white()

@@ -128,12 +128,4 @@ from tkinter import ttk
 # if datetime.strptime(date1, "%d-%m-%Y") <= datetime.strptime(dddd, "%d-%m-%Y") <= datetime.strptime(date2, "%d-%m-%Y"):
 #     print("yes")
 
-def search_dict(data, name=None, age=None, date=None):
-    results = []
-    for key, value in data.items():
-        if (name is None or value.get('name') == name) and (age is None or value.get('age') == age) and (date is None or value.get('date') == date):
-            results.append(key)
-    return results
-
-dict1 = {"3":{"date":"04-05-2023", "name": "dani", "age":"12"}, "4":{"date":"05-05-2023", "name": "moshe", "age":"40"}}
-print(search_dict(dict1, name="moshe", age="40"))
+print(datetime.today().strftime("%d-%m-%Y"))

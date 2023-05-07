@@ -112,6 +112,7 @@ class TrackingOrders:
     def search_by_parameters(self):
         id, date_order, date_order_2, name, date_delivery, date_delivery_2, status, method = SearchOrderTop.SearchOrderTop(self.window).start()
         if id==date_order==date_order_2==name==date_delivery==date_delivery_2==status==method==None:
+            self.add_all_orders_to_tree()
             return
 
         all_orders = Function.read_new_orders_from_json()

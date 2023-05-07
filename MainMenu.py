@@ -22,6 +22,9 @@ class MainMenu:
         b_products.place(relx=.5, rely=.55, anchor=CENTER)
         b_reports = Button(frame_menu, text="דוחות", command=self.open_reports_screen, width=12, height=3, font=("Narkisim", 15, 'bold'), bg=Function.colors("color_btn_menu"), fg='#ffffff')
         b_reports.place(relx=.5, rely=.7, anchor=CENTER)
+        b_backup = Button(frame_menu, text="גיבוי כללי", command=Function.backup_all, width=16, height=2, font=("Narkisim", 11), bg="gray", fg='#ffffff')
+        b_backup.place(relx=.5, rely=.95, anchor=CENTER)
+
 
 
         self.main_screen = MainScreen.MainScreen(window)

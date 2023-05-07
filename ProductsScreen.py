@@ -133,11 +133,10 @@ class ProductsScreen:
     def search_product_in_products_screen(self):
         for item in self.tree_all_products.get_children():
             self.tree_all_products.delete(item)
-        for name in Function.read_all_products_from_json().keys():
+        all_products = Function.read_all_products_from_json()
+        for name in all_products.keys():
             if name.find(self.entry_search.get()) != -1:
-                self.tree_all_products.insert("", END, values=[Function.read_all_products_from_json()[name]["price"],
-                                                               Function.read_all_products_from_json()[name]["cost"],
-                                                               name])
+                self.tree_all_products.insert("", END, values=[all_products[name]["price"], all_products[name]["cost"], name])
 
     def delete_product_from_all_products(self):
         try:
