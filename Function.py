@@ -5,7 +5,7 @@ from zipfile import ZipFile
 from datetime import datetime
 from tkinter import messagebox
 
-version_number = "1.5"
+version_number = "1.6"
 ini_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\Tracking_Order.ini"
 all_products_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Data\AllProducts.json"
 all_order_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Data\NewOrders.json"
