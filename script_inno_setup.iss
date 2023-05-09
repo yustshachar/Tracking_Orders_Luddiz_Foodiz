@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName=D:\Luddiz.Foodiz - Tracking Orders\{#MyAppName}
+DefaultDirName={autopf}\{#MyAppName}
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
@@ -28,6 +28,7 @@ SetupIconFile=C:\Users\Shachar.Yust-extern\PycharmProjects\Tracking_Orders\Confi
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+PrivilegesRequired=admin
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -38,8 +39,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\Users\Shachar.Yust-extern\PycharmProjects\Tracking_Orders\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Shachar.Yust-extern\PycharmProjects\Tracking_Orders\Config\*"; DestDir: "{app}\Config"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Shachar.Yust-extern\PycharmProjects\Tracking_Orders\Data\*"; DestDir: "{app}\Data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Shachar.Yust-extern\PycharmProjects\Tracking_Orders\Config\*"; DestDir: "{commonappdata}\{#MyAppExeName}\Config"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Shachar.Yust-extern\PycharmProjects\Tracking_Orders\Data\*"; DestDir: "{commonappdata}\{#MyAppExeName}\Data"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -47,5 +48,8 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: runascurrentuser nowait postinstall skipifsilent
+;Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
+[Dirs]
+Name: "{commonappdata}\{#MyAppExeName}" ; Permissions: users-modify users-full

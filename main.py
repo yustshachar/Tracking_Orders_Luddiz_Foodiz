@@ -312,10 +312,10 @@ def save_product():
     if len(entry_name_product.get()) == 0 or len(entry_cost_product.get()) == 0 or len(entry_price_product.get()) == 0 or not entry_cost_product.get().isnumeric() or not entry_price_product.get().isnumeric():
         return
     try:
-        list_products[entry_name_product.get()]["cost"] = int(entry_cost_product.get())
-        list_products[entry_name_product.get()]["price"] = int(entry_price_product.get())
+        list_products[entry_name_product.get()]["cost"] = float(entry_cost_product.get())
+        list_products[entry_name_product.get()]["price"] = float(entry_price_product.get())
     except:
-        list_products[entry_name_product.get()] = {"cost": int(entry_cost_product.get()), "price": int(entry_price_product.get())}
+        list_products[entry_name_product.get()] = {"cost": float(entry_cost_product.get()), "price": int(entry_price_product.get())}
     write_products_to_json(list_products)
     add_products_to_tree_products_screen()
     entry_name_product.delete(0, END)

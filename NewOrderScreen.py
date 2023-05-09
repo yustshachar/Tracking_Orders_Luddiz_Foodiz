@@ -260,7 +260,7 @@ class NewOrderScreen:
         self.calculate_bid()
 
     def focus_out_from_edit_entry(self, event):
-        if not event.widget.get().isnumeric():
+        if not self.is_float(event.widget.get()):
             event.widget.destroy()
             return
         selectedItem = event.widget.editing_item_iid
@@ -271,14 +271,14 @@ class NewOrderScreen:
     def calculate_bid(self):
         bid = 0
         for item in self.tree_products_in_new_order.get_children():
-            bid += int(self.tree_products_in_new_order.item(item)["values"][1]) * int(self.tree_products_in_new_order.item(item)["values"][0])
+            bid += float(self.tree_products_in_new_order.item(item)["values"][1]) * float(self.tree_products_in_new_order.item(item)["values"][0])
         self.def_in_bid.set(str(bid))
 
     def validate_entrys(self):
         red = []
         for ent in [self.name_entry, self.price_entry]:
             if ent.get() == "": red.append(ent)
-        if not self.price_entry.get().isnumeric(): red.append(self.price_entry)
+        if not self.is_float(self.price_entry.get()): red.append(self.price_entry)
         if self.phone_entry.get() != "" and (self.phone_entry.get()[:2] != "05" or len(self.phone_entry.get()) != 10): red.append(self.phone_entry)
         if Function.status_order_option.index(self.status_selected.get()) and self.method_entry.get() == "": red.append(self.method_entry)
         if len(self.tree_products_in_new_order.get_children()) == 0: self.lable_title_in.config(fg="red")
@@ -288,7 +288,7 @@ class NewOrderScreen:
                 ent.config(bg="#FFB6B6")
             return False
         elif len(self.tree_products_in_new_order.get_children()) == 0: return False
-        elif int(self.price_entry.get()) < int(self.bid_entry.get()):
+        elif float(self.price_entry.get()) < float(self.bid_entry.get()):
             if not messagebox.askyesno("מחיר סופי נמוך", "המחיר הסופי נמוך מהצעת המחיר\nהאם להמשיך בכל זאת?"): return False
         return True
 
@@ -356,5 +356,10 @@ class NewOrderScreen:
         self.close()
         tracking_order_screen.place(x=0, y=0)
 
-
+    def is_float(self, string):
+        try:
+            float(string)
+            return True
+        except ValueError:
+            return False
 

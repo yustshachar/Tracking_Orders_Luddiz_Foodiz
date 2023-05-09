@@ -3,7 +3,7 @@ from Program import *
 from Function import *
 
 
-class ReportsScreen:
+class TrackingExpenseScreen:
     def __init__(self, window):
         pass
 

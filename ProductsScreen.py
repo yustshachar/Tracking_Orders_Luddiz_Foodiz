@@ -91,17 +91,17 @@ class ProductsScreen:
     def save_product(self):
         dict_products = Function.read_all_products_from_json()
         if len(self.entry_name_product.get()) == 0 or len(self.entry_cost_product.get()) == 0 or len(
-                self.entry_price_product.get()) == 0 or not self.entry_cost_product.get().isnumeric() or not self.entry_price_product.get().isnumeric():
+                self.entry_price_product.get()) == 0 or not self.is_float(self.entry_cost_product.get()) or not self.is_float(self.entry_price_product.get()):
             return
         if self.entry_name_product.get() in dict_products:
             if not messagebox.askyesno("הערה", "קיים כבר מוצר בשם הזה.\nהאם להחליפו?"):
                 return
         try:
-            dict_products[self.entry_name_product.get()]["cost"] = int(self.entry_cost_product.get())
-            dict_products[self.entry_name_product.get()]["price"] = int(self.entry_price_product.get())
+            dict_products[self.entry_name_product.get()]["cost"] = float(self.entry_cost_product.get())
+            dict_products[self.entry_name_product.get()]["price"] = float(self.entry_price_product.get())
         except:
-            dict_products[self.entry_name_product.get()] = {"cost": int(self.entry_cost_product.get()),
-                                                            "price": int(self.entry_price_product.get())}
+            dict_products[self.entry_name_product.get()] = {"cost": float(self.entry_cost_product.get()),
+                                                            "price": float(self.entry_price_product.get())}
         Function.write_products_to_json(dict_products)
         self.add_products_to_tree_products_screen()
         self.entry_name_product.delete(0, END)
@@ -180,19 +180,19 @@ class ProductsScreen:
         if event.widget.editing_column_index == 2:  # name
             list_products[event.widget.get()] = list_products.pop(self.tree_all_products.item(selectedItem)["values"][2])
         elif event.widget.editing_column_index == 1:  # cost
-            if not event.widget.get().isnumeric():
+            if not self.is_float(event.widget.get()):
                 event.widget.destroy()
                 return
             try:
-                list_products[self.tree_all_products.item(selectedItem)["values"][2]]["cost"] = int(event.widget.get())
+                list_products[self.tree_all_products.item(selectedItem)["values"][2]]["cost"] = float(event.widget.get())
             except:
                 return
         elif event.widget.editing_column_index == 0:  # price
-            if not event.widget.get().isnumeric():
+            if not self.is_float(event.widget.get()):
                 event.widget.destroy()
                 return
             try:
-                list_products[self.tree_all_products.item(selectedItem)["values"][2]]["price"] = int(event.widget.get())
+                list_products[self.tree_all_products.item(selectedItem)["values"][2]]["price"] = float(event.widget.get())
             except:
                 return
 
@@ -209,3 +209,10 @@ class ProductsScreen:
     #         self.lbl.place(x=event.x, y=event.y)
     #     else:
     #         self.lbl.place_forget()
+
+    def is_float(self, string):
+        try:
+            float(string)
+            return True
+        except ValueError:
+            return False

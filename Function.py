@@ -6,9 +6,10 @@ from datetime import datetime
 from tkinter import messagebox
 
 version_number = "1.4"
-ini_file_name = r"Config\Tracking_Order.ini"
-all_products_file_name = r"Data\AllProducts.json"
-all_order_file_name = r"Data\NewOrders.json"
+ini_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\Tracking_Order.ini"
+all_products_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Data\AllProducts.json"
+all_order_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Data\NewOrders.json"
+logo_file = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\logo.png"
 
 status_order_option = ["פתוח", "סגור - בוצע תשלום"]
 
