@@ -5,11 +5,12 @@ from zipfile import ZipFile
 from datetime import datetime
 from tkinter import messagebox
 
-version_number = "1.4"
+version_number = "1.5"
 ini_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\Tracking_Order.ini"
 all_products_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Data\AllProducts.json"
 all_order_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Data\NewOrders.json"
 logo_file = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\logo.png"
+backup_folder = r"C:\ProgramData\Luddiz.Foodiz\BackUp"
 
 status_order_option = ["פתוח", "סגור - בוצע תשלום"]
 
@@ -79,10 +80,13 @@ def delete_order_from_json_by_id(id):
 def backup_all():
     if not messagebox.askyesno("BackUp Tracking Order", "האם לגבות את כל נתוני התוכנה?"):
         return
-    if not os.path.exists("BackUp"):
-        os.makedirs("BackUp")
-    zipObj = ZipFile(f'BackUp\TrackingOrdersV{version_number}-BackUp-{datetime.today().strftime("%d-%m-%Y")}.zip', 'w')
-    zipObj.write(ini_file_name)
-    zipObj.write(all_products_file_name)
-    zipObj.write(all_order_file_name)
-    zipObj.close()
+    if not os.path.exists(backup_folder):
+        os.makedirs(backup_folder)
+    try:
+        zipObj = ZipFile(f'{backup_folder}\TrackingOrdersV{version_number}-BackUp-{datetime.today().strftime("%d-%m-%Y-%H-%M-%S")}.zip', 'w')
+        zipObj.write(ini_file_name, f"{os.path.basename(os.path.dirname(ini_file_name))}\\{os.path.basename(ini_file_name)}")
+        zipObj.write(all_products_file_name, f"{os.path.basename(os.path.dirname(all_products_file_name))}\\{os.path.basename(all_products_file_name)}")
+        zipObj.write(all_order_file_name, f"{os.path.basename(os.path.dirname(all_order_file_name))}\\{os.path.basename(all_order_file_name)}")
+        zipObj.close()
+        messagebox.showinfo("BackUp Tracking Order", "כל נתוני התוכנה גובו")
+    except: messagebox.showinfo("BackUp Tracking Order", "שגיאה! לא בוצע גיבוי!")

@@ -128,15 +128,8 @@ from tkinter import ttk
 # if datetime.strptime(date1, "%d-%m-%Y") <= datetime.strptime(dddd, "%d-%m-%Y") <= datetime.strptime(date2, "%d-%m-%Y"):
 #     print("yes")
 
-import open
-workbook = openpyxl.load_workbook("D:\Documents\Desktop\Book1.csv")
-worksheet = workbook.active
-
-dictionary = {}
-
-for row in range(1, worksheet.max_row + 1):
-  key = worksheet.cell(row, 1).value
-  value = worksheet.cell(row, 2).value
-  dictionary[key] = value
-
-print(dictionary)
+import os
+file = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\Tracking_Order.ini"
+print(os.path.dirname(file))
+print(os.path.basename(file))
+print(f"{os.path.basename(os.path.dirname(file))}\\{os.path.basename(file)}")
