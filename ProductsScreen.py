@@ -141,6 +141,7 @@ class ProductsScreen:
     def delete_product_from_all_products(self):
         try:
             selectedItem = self.tree_all_products.selection()[0]
+            if not messagebox.askokcancel("מחיקת מוצר", "האם למחוק את המוצר?\nהמוצר לא יימחק מהזמנות עם המוצר, אך לא יישאר ברשימת המוצרים"): return
             list_products = Function.read_all_products_from_json()
             if self.tree_all_products.item(selectedItem)['values'][2] in list_products:
                 del list_products[self.tree_all_products.item(selectedItem)['values'][2]]

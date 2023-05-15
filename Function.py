@@ -3,7 +3,8 @@ import json
 import os
 from zipfile import ZipFile
 from datetime import datetime
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
+from openpyxl import Workbook
 
 version_number = "1.6"
 ini_file_name = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\Tracking_Order.ini"
@@ -51,12 +52,12 @@ def read_all_products_from_json():
         return dict_sort
 
 
-def read_new_orders_from_json():
+def read_new_orders_from_json(reverse=True):
     if not os.path.isfile(all_order_file_name):
         return {}
     with open(all_order_file_name, encoding="utf8") as r_no:
         all_orders = json.loads(r_no.read())
-        orders_sort = dict(sorted(all_orders.items(), key=lambda item: datetime.strptime(item[1]["date_delivery"], "%d-%m-%Y"), reverse=True))
+        orders_sort = dict(sorted(all_orders.items(), key=lambda item: datetime.strptime(item[1]["date_delivery"], "%d-%m-%Y"), reverse=reverse))
         return orders_sort
 
 
@@ -90,3 +91,38 @@ def backup_all():
         zipObj.close()
         messagebox.showinfo("BackUp Tracking Order", "כל נתוני התוכנה גובו")
     except: messagebox.showinfo("BackUp Tracking Order", "שגיאה! לא בוצע גיבוי!")
+
+def export_report(ids):
+    file_name = filedialog.asksaveasfilename(filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx")
+    all_orders = read_new_orders_from_json()
+
+    book = Workbook()
+    sheet = book.active
+    sheet['A1'] = "לודיז.פודיז - דוח הזמנות"
+    sheet['B1'] = datetime.now()
+    sheet['A3'] = "סך הכל הכנסות בדוח"
+    sheet['A4'] = "סך הכל רווח בדוח"
+    sheet['A5'] = ""
+    sheet.append(["מספר הזמנה", "תאריך הזמנה", "שם המזמין", "טלפון", "תאריך אספקה", "הערות", "מחיר", "סטטוס", "אמצעי תשלום", "רווח עסקה", "שם מוצר", "עלות", "מחיר", "כמות"])
+
+    r = 6
+    c = 11
+    for id in ids:
+        sheet.append([id, all_orders[id]["date_order"], all_orders[id]["name"], all_orders[id]["phone"], all_orders[id]["date_delivery"], all_orders[id]["remarks"], float(all_orders[id]["price"]), all_orders[id]["status"], all_orders[id]["method"]])
+        r_id = r+1
+        cost_order = 0
+        for d_product in all_orders[id]["products"]:
+            r += 1
+            for product in d_product:
+                sheet.cell(row=r, column=c).value = d_product[product]
+                c += 1
+            cost_order += d_product["cost"] * d_product["amount"]
+            c = 11
+        sheet.cell(row=r_id, column=10).value = float(all_orders[id]["price"]) - cost_order
+
+    sheet['B3'] = "=SUM(G:G)"
+    sheet['B4'] = "=SUM(J:J)"
+
+    sheet.sheet_view.rightToLeft = True
+
+    book.save(filename=file_name)

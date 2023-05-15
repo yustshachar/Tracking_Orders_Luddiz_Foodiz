@@ -17,7 +17,7 @@ class Program:
         height_win = 800
         x_cor = (self.window.winfo_screenwidth() / 2) - (width_win / 2)
         y_cor = (self.window.winfo_screenheight() / 2) - (height_win / 2)
-        self.window.geometry(f"{width_win}x{height_win}+{int(x_cor)}+{int(y_cor) - 20}")
+        self.window.geometry(f"{width_win}x{height_win}+{int(x_cor)}+0")
         self.window.resizable(False, False)
 
         MainMenu.MainMenu(self.window)

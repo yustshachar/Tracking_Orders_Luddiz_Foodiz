@@ -50,17 +50,31 @@ class TrackingOrders:
         # self.vsb.place(relx=.53, rely=.64, anchor=CENTER, height=500)
         # self.tree_products_in_order.configure(yscrollcommand=self.vsb.set)
 
-        self.b_edit_order = Button(self.tracking_order_screen, text="עריכת\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.click_edit_order)
-        self.b_edit_order.place(relx=.03, rely=.75)
+        # הזמנות עתידיות
+        # כל ההזמנות
+        # עריכת הזמנה
+        # מחיקת הזמנה
+        # יצוא דוח
+        # חיפוש
 
-        self.b_delete_order = Button(self.tracking_order_screen, text="מחיקת\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.delete_order)
-        self.b_delete_order.place(relx=.17, rely=.75)
+        self.b_fudure_orders = Button(self.tracking_order_screen, text="הזמנות\nעתידיות", width=7, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.show_future_orders)
+        self.b_fudure_orders.place(relx=.21, rely=.75)
 
-        self.b_search_order = Button(self.tracking_order_screen, text="חיפוש\nהזמנה", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.search_by_parameters)
-        self.b_search_order.place(relx=.03, rely=.875)
+        self.b_all_orders = Button(self.tracking_order_screen, text="כל\nההזמנות", width=7, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.add_all_orders_to_tree)
+        self.b_all_orders.place(relx=.21, rely=.875)
 
-        self.b_all_order = Button(self.tracking_order_screen, text="כל\nההזמנות", width=10, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.add_all_orders_to_tree)
-        self.b_all_order.place(relx=.17, rely=.875)
+        self.b_edit_order = Button(self.tracking_order_screen, text="עריכת\nהזמנה", width=7, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.click_edit_order)
+        self.b_edit_order.place(relx=.115, rely=.75)
+
+        self.b_delete_order = Button(self.tracking_order_screen, text="מחיקת\nהזמנה", width=7, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.delete_order)
+        self.b_delete_order.place(relx=.115, rely=.875)
+
+        self.b_report = Button(self.tracking_order_screen, text='ייצוא\nדו"ח', width=7, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.to_report)
+        self.b_report.place(relx=.02, rely=.75)
+
+        self.b_search_order = Button(self.tracking_order_screen, text="חיפוש\nהזמנה", width=7, height=2, bg=Function.colors("color_btn_menu"), fg='white', font=(None, 16, "bold"), command=self.search_by_parameters)
+        self.b_search_order.place(relx=.02, rely=.875)
+
 
 
 
@@ -109,6 +123,17 @@ class TrackingOrders:
     def show_after_edit_order(self):
         self.tracking_order_screen.place(x=0, y=0)
 
+    def show_future_orders(self):
+        all_orders = Function.read_new_orders_from_json(reverse=False)
+        for item in self.tree_order.get_children():
+            self.tree_order.delete(item)
+        for item in self.tree_products_in_order.get_children():
+            self.tree_products_in_order.delete(item)
+
+        for i in all_orders:
+            if datetime.today() <= datetime.strptime(all_orders[i]["date_delivery"],"%d-%m-%Y"):
+                self.tree_order.insert("", END, values=(Function.status_order_option[all_orders[i]["status"]].split()[0], all_orders[i]["price"], all_orders[i]["date_delivery"], all_orders[i]["phone"], all_orders[i]["name"], all_orders[i]["date_order"], i))
+
     def search_by_parameters(self):
         id, date_order, date_order_2, name, date_delivery, date_delivery_2, status, method = SearchOrderTop.SearchOrderTop(self.window).start()
         if id==date_order==date_order_2==name==date_delivery==date_delivery_2==status==method==None:
@@ -136,5 +161,8 @@ class TrackingOrders:
         for i in res_ids:
             self.tree_order.insert("", END, values=(Function.status_order_option[all_orders[i]["status"]].split()[0], all_orders[i]["price"], all_orders[i]["date_delivery"], all_orders[i]["phone"], all_orders[i]["name"], all_orders[i]["date_order"],i))
 
-        # datetime.strptime(date_order, "%d-%m-%Y") <= datetime.strptime(all_orders[i]["date_order"],"%d-%m-%Y") <= datetime.strptime(date_order_2,"%d-%m-%Y") and \
-            # datetime.strptime(date_delivery, "%d-%m-%Y") <= datetime.strptime(all_orders[i]["date_delivery"],"%d-%m-%Y") <= datetime.strptime(date_delivery_2, "%d-%m-%Y") and \
+    def to_report(self):
+        ids = []
+        for i in self.tree_order.get_children():
+            ids.append(str(self.tree_order.item(i)["values"][6]))
+        Function.export_report(ids)

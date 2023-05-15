@@ -128,8 +128,31 @@ from tkinter import ttk
 # if datetime.strptime(date1, "%d-%m-%Y") <= datetime.strptime(dddd, "%d-%m-%Y") <= datetime.strptime(date2, "%d-%m-%Y"):
 #     print("yes")
 
-import os
-file = r"C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\Tracking_Order.ini"
-print(os.path.dirname(file))
-print(os.path.basename(file))
-print(f"{os.path.basename(os.path.dirname(file))}\\{os.path.basename(file)}")
+
+from tkinter import filedialog
+
+print(filedialog.asksaveasfilename(filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx"))
+
+# from openpyxl import Workbook
+#
+# book = Workbook()
+# sheet = book.active
+#
+# # r=2
+# # for i in [[1,2,3,4], [1,2,3,4], [1,2,3,4]]:
+# # sheet.cel
+# # r+=1
+#
+# r=1
+# c=11
+# products = [["a", "b", "c"], ["aa", "bb", "cc"], ["aaa", "bbb", "ccc"]]
+# for d_product in products:
+#     for product in d_product:
+#         sheet.cell(row=r, column=c).value = product
+#         c+=1
+#     r+=1
+#     c=11
+#
+#
+#
+# book.save('write2cell.xlsx')

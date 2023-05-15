@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Luddiz.Foodiz - Tracking Orders"
-#define MyAppVersion "1.5"
+#define MyAppVersion "1.6"
 #define MyAppPublisher "Luddiz.Foodiz"
 #define MyAppURL "yustshachar@gmail.com"
 #define MyAppExeName "Luddiz.Foodiz - Tracking Order.exe"
@@ -23,7 +23,7 @@ DisableDirPage=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputBaseFilename=SETUP Luddiz.Foodiz - Tracking Orders
+OutputBaseFilename=SETUP Luddiz.Foodiz - Tracking Orders - {#MyAppVersion}
 SetupIconFile=C:\ProgramData\Luddiz.Foodiz\Tracking Order\Config\logo_icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -38,7 +38,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\Users\Shachar.Yust-extern\output\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\ProgramData\Luddiz.Foodiz\*"; DestDir: "{commonappdata}\Luddiz.Foodiz"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Source: "C:\ProgramData\Luddiz.Foodiz\*"; DestDir: "{commonappdata}\Luddiz.Foodiz"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
