@@ -1,0 +1,25 @@
+{
+    "3": {
+        "date_order": "26-03-2023",
+        "name": "אברהם",
+        "phone": "052-1234567",
+        "date_delivery": "30-03-2023",
+        "remarks": "",
+        "price": 40,
+        "status": 0,
+        "method": "",
+        "products": [{"name": "מוצר כלשהו","price": 12,"amount": 1}, {"name": "מוצר אחר","price": 20,"amount": 2}]
+    },
+    "4": {
+        "date_order": "27-03-2023",
+        "name": "עמיחי",
+        "phone": "052-1234567",
+        "date_delivery": "31-03-2023",
+        "remarks": "",
+        "price": 40,
+        "status": 0,
+        "method": "",
+        "products": [{"name": "product12","price": 16,"amount": 2}, {"name": "מוצרמוצר","price": 40,"amount": 1}]
+    }
+}
+

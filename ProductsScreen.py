@@ -6,7 +6,7 @@ import Function
 class ProductsScreen:
     def __init__(self, window):
         self.products_screen = Frame(window, width=1300, height=800, bg=Function.colors("color_screen"))
-        self.lable_search = Label(self.products_screen, text=":חיפוש", bg=Function.colors("color_screen"))
+        self.lable_search = Label(self.products_screen, text=":חיפוש מוצר", bg=Function.colors("color_screen"))
         self.lable_search.place(relx=0.62, rely=0.023)
         self.entry_search = Entry(self.products_screen, width=35, justify='right')
         self.entry_search.place(relx=0.45, rely=0.025)
@@ -81,11 +81,12 @@ class ProductsScreen:
         self.products_screen.place_forget()
 
     def add_products_to_tree_products_screen(self):
+        all_products = Function.read_all_products_from_json()
         for item in self.tree_all_products.get_children():
             self.tree_all_products.delete(item)
-        for name in Function.read_all_products_from_json().keys():
-            self.tree_all_products.insert("", END, values=[Function.read_all_products_from_json()[name]["price"],
-                                                           Function.read_all_products_from_json()[name]["cost"], name])
+        for name in all_products.keys():
+            self.tree_all_products.insert("", END, values=[all_products[name]["price"],
+                                                           all_products[name]["cost"], name])
         self.clear_entry_product()
 
     def save_product(self):

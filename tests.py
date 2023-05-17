@@ -131,7 +131,15 @@ from tkinter import ttk
 
 from tkinter import filedialog
 
-print(filedialog.asksaveasfilename(filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx"))
+# li = [["aaa","bbb","ccc"], ["aa","1","cc"]]
+# print(li)
+dd = ["aa",1,"cc"]
+print(dd)
+da= [str(a) for a in dd]
+print(da)
+
+# li.remove(dd)
+# print(li)
 
 # from openpyxl import Workbook
 #

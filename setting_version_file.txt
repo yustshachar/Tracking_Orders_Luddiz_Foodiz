@@ -1,7 +1,0 @@
-Version: 1.5.0.0
-CompanyName: Luddiz.Foodiz
-FileDescription: Tracking Order
-InternalName: Tracking Order
-LegalCopyright: yustshachar@gmail.com
-ProductName: Luddiz.Foodiz - Tracking Order
-#create-version-file setting_version_file.txt --outfile TrackingOrder_VersionFile.txt
