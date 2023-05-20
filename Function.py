@@ -154,7 +154,7 @@ def export_report(ids):
             for product in d_product:
                 sheet.cell(row=r, column=c).value = d_product[product]
                 c += 1
-            cost_order += d_product["cost"] * d_product["amount"]
+            cost_order += float(d_product["cost"]) * d_product["amount"]
             c = 11
         sheet.cell(row=r_id, column=10).value = float(all_orders[id]["price"]) - cost_order
 

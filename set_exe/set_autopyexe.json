@@ -19,7 +19,7 @@
   },
   {
    "optionDest": "icon_file",
-   "value": "C:/ProgramData/Luddiz.Foodiz/Tracking Order/Config/logo_icon.ico"
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Tracking Order/Config/logo_icon.ico"
   },
   {
    "optionDest": "name",
@@ -47,7 +47,7 @@
   },
   {
    "optionDest": "version_file",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/TrackingOrder_VersionFile.txt"
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/set_exe/TrackingOrder_VersionFile.txt"
   },
   {
    "optionDest": "embed_manifest",
@@ -79,15 +79,11 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Data;Data/"
-  },
-  {
-   "optionDest": "datas",
-   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Config;Config/"
-  },
-  {
-   "optionDest": "datas",
    "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/venv/Lib/site-packages/babel;babel/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Shachar.Yust-extern/PycharmProjects/Tracking_Orders/Tracking Order;Tracking Order/"
   }
  ],
  "nonPyinstallerOptions": {
