@@ -166,7 +166,6 @@ class NewOrderScreen:
     def start(self):
         self.new_order_screen.place(x=400, y=0)
         self.all_products_frame.place(x=0, y=0)
-        self.date_order_entry.config(state="normal")
         self.clear_all()
         self.edit_id_order_entry()
         self.add_all_products()
@@ -228,6 +227,7 @@ class NewOrderScreen:
         self.status_selected.set(Function.status_order_option[0])
         self.method_entry.delete(0, END)
         self.def_in_bid.set('0')
+        self.date_order_entry.config(state="normal")
         self.date_order_entry.set_date(date.today())
         self.date_delivery_entry.config(mindate=datetime.strptime(self.date_order_entry.get(), "%d-%m-%Y"))
         self.date_delivery_entry.set_date(date.today() + timedelta(days=1))
