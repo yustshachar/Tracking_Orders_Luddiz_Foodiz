@@ -1,0 +1,20 @@
+2023-05-23 11:51:47,977	Program.py	<module>	32	Start program
+2023-05-23 11:51:48,918	MainMenu.py	open_main_screen	39	Click main screen
+2023-05-23 11:51:49,246	MainMenu.py	open_new_order_screen	47	Click new order screen
+2023-05-23 11:51:49,544	MainMenu.py	open_tracking_orders_screen	55	Click tracking orders screen
+2023-05-23 11:51:49,872	MainMenu.py	open_products_screen	63	Click products screen
+2023-05-23 11:51:50,201	MainMenu.py	open_tracking_expense_screen	71	Click tracking expense screen
+2023-05-23 11:52:33,525	Program.py	<module>	32	Start program
+2023-05-23 11:52:34,947	MainMenu.py	open_tracking_orders_screen	55	Click tracking orders screen
+2023-05-23 11:52:37,722	Function.py	export_report	136	export report fanc start
+2023-05-23 11:52:40,492	Function.py	export_report	139	path = none. stop
+2023-05-25 11:06:53,912	Program.py	<module>	32	Start program
+2023-05-25 11:06:55,659	MainMenu.py	open_new_order_screen	47	Click new order screen
+2023-05-25 11:06:57,647	MainMenu.py	open_new_order_screen	47	Click new order screen
+2023-05-25 11:06:58,117	MainMenu.py	open_tracking_orders_screen	55	Click tracking orders screen
+2023-05-25 11:07:05,950	MainMenu.py	open_new_order_screen	47	Click new order screen
+2023-05-25 11:08:17,329	Program.py	<module>	32	Start program
+2023-05-25 11:08:59,885	MainMenu.py	open_new_order_screen	47	Click new order screen
+2023-05-25 11:09:03,880	MainMenu.py	open_tracking_orders_screen	55	Click tracking orders screen
+2023-05-25 11:09:09,407	MainMenu.py	open_new_order_screen	47	Click new order screen
+2023-05-25 11:09:11,140	MainMenu.py	open_new_order_screen	47	Click new order screen

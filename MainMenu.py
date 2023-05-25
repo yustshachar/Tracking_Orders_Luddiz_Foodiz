@@ -1,3 +1,4 @@
+import logging
 from tkinter import *
 from Program import *
 import MainScreen
@@ -35,6 +36,7 @@ class MainMenu:
 
 
     def open_main_screen(self):
+        logging.debug("Click main screen")
         self.main_screen.start()
         self.new_order_screen.close()
         self.tracking_orders_screen.close()
@@ -42,6 +44,7 @@ class MainMenu:
         self.tracking_expense_screen.close()
 
     def open_new_order_screen(self):
+        logging.debug("Click new order screen")
         self.main_screen.close()
         self.new_order_screen.start()
         self.tracking_orders_screen.close()
@@ -49,6 +52,7 @@ class MainMenu:
         self.tracking_expense_screen.close()
 
     def open_tracking_orders_screen(self):
+        logging.debug("Click tracking orders screen")
         self.main_screen.close()
         self.new_order_screen.close()
         self.tracking_orders_screen.start()
@@ -56,6 +60,7 @@ class MainMenu:
         self.tracking_expense_screen.close()
 
     def open_products_screen(self):
+        logging.debug("Click products screen")
         self.main_screen.close()
         self.new_order_screen.close()
         self.tracking_orders_screen.close()
@@ -63,6 +68,7 @@ class MainMenu:
         self.tracking_expense_screen.close()
 
     def open_tracking_expense_screen(self):
+        logging.debug("Click tracking expense screen")
         self.main_screen.close()
         self.new_order_screen.close()
         self.tracking_orders_screen.close()

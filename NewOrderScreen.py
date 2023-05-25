@@ -166,6 +166,7 @@ class NewOrderScreen:
     def start(self):
         self.new_order_screen.place(x=400, y=0)
         self.all_products_frame.place(x=0, y=0)
+        self.date_order_entry.config(state="normal")
         self.clear_all()
         self.edit_id_order_entry()
         self.add_all_products()

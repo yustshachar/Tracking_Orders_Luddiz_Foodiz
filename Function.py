@@ -5,13 +5,15 @@ from zipfile import ZipFile
 from datetime import datetime, date
 from tkinter import messagebox, filedialog
 from openpyxl import Workbook
+import logging
 
-version_number = "1.7"
+version_number = "1.9"
 
 ini_file_name = r"Tracking Order\Config\Tracking_Order.ini"
 inif = configparser.ConfigParser()
 inif.read(ini_file_name)
 
+main_path = inif["path"]["main_path"]
 all_products_file_name = inif["path"]["all_products_file_name"]
 all_order_file_name = inif["path"]["all_order_file_name"]
 all_expense_file_name = inif["path"]["all_expense_file_name"]
@@ -73,6 +75,7 @@ def read_all_expense_from_json():
 
 def read_new_orders_from_json(reverse=True):
     if not os.path.isfile(all_order_file_name):
+        logging.debug("all order file not exist. return clear")
         return {}
     with open(all_order_file_name, encoding="utf8") as r_no:
         all_orders = json.loads(r_no.read())
@@ -81,11 +84,13 @@ def read_new_orders_from_json(reverse=True):
 
 
 def write_products_to_json(dict_products):
+    logging.debug("start func")
     with open(all_products_file_name, "wb") as w_p:
         w_p.write(json.dumps(dict_products, ensure_ascii=False).encode("utf-8"))
 
 
 def write_order_to_json(dict_order):
+    logging.debug(f"add order func - add: {dict_order}")
     new = read_new_orders_from_json()
     new.update(dict_order)
     with open(all_order_file_name, "wb") as w_no:
@@ -93,6 +98,7 @@ def write_order_to_json(dict_order):
 
 
 def add_one_expense_to_json(list_record):
+    logging.debug(f"add expense func - add: {list_record}")
     all_expense = read_all_expense_from_json()
     all_expense.append(list_record)
     with open(all_expense_file_name, "wb") as w_ne:
@@ -104,18 +110,22 @@ def write_expenses_to_json(all_expenses):
         w_e.write(json.dumps(all_expenses, ensure_ascii=False).encode("utf-8"))
 
 
-
-
 def delete_order_from_json_by_id(id):
+    logging.debug(f"start fanc del id={id}")
     all_orders = read_new_orders_from_json()
     all_orders.pop(id)
+    logging.debug(f"deleted id={id}")
     with open(all_order_file_name, "wb") as w_do:
         w_do.write(json.dumps(all_orders, ensure_ascii=False).encode("utf-8"))
 
+
 def backup_all():
+    logging.debug("backup func start")
     if not messagebox.askyesno("BackUp Tracking Order", "האם לגבות את כל נתוני התוכנה?"):
+        logging.debug("user select not backup - false")
         return
     if not os.path.exists(backup_folder):
+        logging.debug("folder backup not exist. created")
         os.makedirs(backup_folder)
     try:
         zipObj = ZipFile(f'{backup_folder}\TrackingOrdersV{version_number}-BackUp-{datetime.today().strftime("%d-%m-%Y-%H-%M-%S")}.zip', 'w')
@@ -127,9 +137,12 @@ def backup_all():
         messagebox.showinfo("BackUp Tracking Order", "כל נתוני התוכנה גובו")
     except: messagebox.showinfo("BackUp Tracking Order", "שגיאה! לא בוצע גיבוי!")
 
+
 def export_report(ids):
+    logging.debug("export report fanc start")
     file_name = filedialog.asksaveasfilename(filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx", initialfile=f"לודיז פודיז דוח {date.today()}")
     if file_name=="":
+        logging.debug("path = none. stop")
         return
 
     all_orders = read_new_orders_from_json()
@@ -164,3 +177,4 @@ def export_report(ids):
     sheet.sheet_view.rightToLeft = True
 
     book.save(filename=file_name)
+    logging.debug("export report - done")

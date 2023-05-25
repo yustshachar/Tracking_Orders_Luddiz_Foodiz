@@ -5,6 +5,9 @@ import MainScreen
 import MainMenu
 import Function
 import SearchOrderTop
+import logging
+
+logging.basicConfig(filename=f"{Function.main_path}/TrackingOrdersLog.log", level=logging.DEBUG, format="%(asctime)s\t%(filename)s\t%(funcName)s\t%(lineno)d\t%(message)s")
 
 
 class Program:
@@ -26,5 +29,6 @@ class Program:
 
 
 if __name__ == '__main__':
+    logging.debug("Start program")
     window = Tk()
     main_program = Program(window)
