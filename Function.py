@@ -7,7 +7,7 @@ from tkinter import messagebox, filedialog
 from openpyxl import Workbook
 import logging
 
-version_number = "2.1"
+version_number = "3.0"
 
 ini_file_name = r"Tracking Order\Config\Tracking_Order.ini"
 inif = configparser.ConfigParser()
