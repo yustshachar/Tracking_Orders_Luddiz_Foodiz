@@ -3,7 +3,7 @@ from tkinter.ttk import Treeview, Style
 import NewOrderScreen
 import Function
 import SearchOrderTop
-from datetime import datetime
+from datetime import datetime, date
 
 
 class TrackingOrders:
@@ -131,7 +131,7 @@ class TrackingOrders:
             self.tree_products_in_order.delete(item)
 
         for i in all_orders:
-            if datetime.today() <= datetime.strptime(all_orders[i]["date_delivery"],"%d-%m-%Y"):
+            if datetime.strptime(str(datetime.today().date()),"%Y-%m-%d") <= datetime.strptime(all_orders[i]["date_delivery"],"%d-%m-%Y"):
                 self.tree_order.insert("", END, values=(Function.status_order_option[all_orders[i]["status"]].split()[0], all_orders[i]["price"], all_orders[i]["date_delivery"], all_orders[i]["phone"], all_orders[i]["name"], all_orders[i]["date_order"], i))
 
     def search_by_parameters(self):
