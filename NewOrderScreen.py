@@ -344,7 +344,7 @@ class NewOrderScreen:
         self.method_entry.insert(0, all_orders[id]["method"])
         self.date_order_entry.set_date(datetime.strptime(all_orders[id]["date_order"], "%d-%m-%Y"))
         self.date_order_entry.config(state="disabled")
-        self.date_delivery_entry.config(mindate=None)
+        self.date_delivery_entry.config(mindate=datetime.strptime(all_orders[id]["date_order"], "%d-%m-%Y"))
         self.date_delivery_entry.set_date(datetime.strptime(all_orders[id]["date_delivery"], "%d-%m-%Y"))
         for product in all_orders[id]["products"]:
             self.tree_products_in_new_order.insert("", END, values=(product["amount"], product["price"], product["cost"], product["name"]))
