@@ -63,7 +63,7 @@ class NewOrderScreen:
 
         self.date_delivery_lable = Label(self.new_order_screen, text="תאריך אספקה", bg=Function.colors("color_screen"), font=(None, 12))
         self.date_delivery_lable.place(relx=0.85, rely=0.35)
-        self.date_delivery_entry = DateEntry(self.new_order_screen, width=16, borderwidth=2, date_pattern='dd-MM-yyyy', justify="center", font=(None, 12), showweeknumbers=False, year=datetime.today().year, month=datetime.today().month, day=datetime.today().day+1, firstweekday='sunday', mindate=datetime.strptime(self.date_order_entry.get(), "%d-%m-%Y"), locale='he_IL', weekenddays=[7,7])
+        self.date_delivery_entry = DateEntry(self.new_order_screen, width=16, borderwidth=2, date_pattern='dd-MM-yyyy', justify="center", font=(None, 12), showweeknumbers=False, firstweekday='sunday', mindate=datetime.strptime(self.date_order_entry.get(), "%d-%m-%Y"), locale='he_IL', weekenddays=[7,7])
         self.date_delivery_entry.place(relx=0.63, rely=0.35)
 
         self.remarks_lable = Label(self.new_order_screen, text="הערות", bg=Function.colors("color_screen"), font=(None, 12))
@@ -344,8 +344,8 @@ class NewOrderScreen:
         self.method_entry.insert(0, all_orders[id]["method"])
         self.date_order_entry.set_date(datetime.strptime(all_orders[id]["date_order"], "%d-%m-%Y"))
         self.date_order_entry.config(state="disabled")
+        self.date_delivery_entry.config(mindate=None)
         self.date_delivery_entry.set_date(datetime.strptime(all_orders[id]["date_delivery"], "%d-%m-%Y"))
-        self.date_delivery_entry.config(mindate=date.today())
         for product in all_orders[id]["products"]:
             self.tree_products_in_new_order.insert("", END, values=(product["amount"], product["price"], product["cost"], product["name"]))
         self.calculate_bid()
